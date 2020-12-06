@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../inc/matrix_creation.h"
 #include "../inc/errors.h"
+#include "../inc/utils.h"
+#include "../inc/matrix_operations.h"
 
 int main()
 {
@@ -58,6 +60,33 @@ int main()
             {
                 return MATRIX_DATA_INPUT_ERROR;
             }
+        }
+    }
+
+    // squaring matrix A
+    unsigned int k;
+
+    if (m != n)
+    {
+        k = min(m, n);
+        rc = squaring(matrix_a, m, n, k);
+        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
+        {
+            return MATRIX_MEMORY_ALLOCATION_ERROR;
+        }
+
+    }
+
+    // squaring matrix B
+    unsigned int s;
+
+    if (p != q)
+    {
+        s = min(p, q);
+        rc = squaring(matrix_b, p, q, s);
+        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
+        {
+            return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
     }
 
