@@ -10,3 +10,8 @@ symcache/
 *.files 
 *.includes 
 *.creator
+*.cflags
+*.config
+*.cxxflags
+*.out
+*.zip
