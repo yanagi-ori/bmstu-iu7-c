@@ -1,0 +1,7 @@
+*.o *.exe *.files *.includes *.creator
+CMakeLists.txt
+.idea/
+cmake-build-debug/
+cmake-build-release/
+dynamorio/
+symcache/
