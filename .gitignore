@@ -5,4 +5,8 @@ cmake-build-release/
 dynamorio/
 symcache/
 
-*.o *.exe *.files *.includes *.creator
+*.o 
+*.exe 
+*.files 
+*.includes 
+*.creator
