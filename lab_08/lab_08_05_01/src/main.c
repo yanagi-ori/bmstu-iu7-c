@@ -7,7 +7,7 @@ int main()
     int rc;
 
     // first matrix data input
-    int m, n;
+    unsigned int m, n;
     int **matrix_a;
 
     printf("Input number of rows and columns of the matrix A: \n");
@@ -17,7 +17,7 @@ int main()
         return MATRIX_DATA_INPUT_ERROR;
     }
 
-    matrix_a = create_martix(m, n);
+    matrix_a = create_matrix(m, n);
     if (matrix_a == NULL)
     {
         return MATRIX_MEMORY_ALLOCATION_ERROR;
@@ -35,7 +35,7 @@ int main()
     }
 
     // second matrix data input
-    int p, q;
+    unsigned int p, q;
     int **matrix_b;
 
     printf("Input number of rows and columns of the matrix B: ");
@@ -44,7 +44,7 @@ int main()
     {
         MATRIX_DATA_INPUT_ERROR;
     }
-    matrix_b = create_martix(p, q);
+    matrix_b = create_matrix(p, q);
     if (matrix_b == NULL)
     {
         return MATRIX_MEMORY_ALLOCATION_ERROR;

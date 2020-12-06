@@ -6,7 +6,7 @@
 
 #include "../inc/errors.h"
 
-int **create_martix(int m, int n)
+int **create_matrix(unsigned int m, unsigned int n)
 {
     int **pointers, *data;
 
