@@ -1,0 +1,5 @@
+Enter number of rows and columns: 4 1
+10
+9
+8
+7

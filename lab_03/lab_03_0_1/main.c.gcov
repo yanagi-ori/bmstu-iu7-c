@@ -1,0 +1,79 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:7
+        -:    1:#include <stdio.h>
+        -:    2:
+        -:    3:#define ERROR_INPUT_MATRIX -3
+        -:    4:#define INPUT_ERROR -1
+        -:    5:
+        -:    6:
+        5:    7:int matrix_input(int rows, int columns, int matrix[][10])
+        -:    8:{
+        -:    9:    int temp;
+       23:   10:    for (int i = 0; i < rows; i++)
+        -:   11:    {
+       19:   12:        printf("Enter the next line: \n");
+      136:   13:        for (int j = 0; j < columns; j++)
+        -:   14:        {
+      118:   15:            temp = scanf("%d", &matrix[i][j]);
+      118:   16:            if (temp != 1)
+        -:   17:            {
+        1:   18:                return ERROR_INPUT_MATRIX;
+        -:   19:            }
+        -:   20:        }
+        -:   21:    }
+        4:   22:    return 0;
+        -:   23:}
+        -:   24:
+       18:   25:int row_search(int rows, int column, int matrix[][10])
+        -:   26:{
+       18:   27:    if (rows == 1)
+        -:   28:    {
+        4:   29:        return 0;
+        -:   30:    }
+        -:   31:    else
+        -:   32:    {
+       23:   33:        for (int i = 1; i < rows; i++)
+        -:   34:        {
+       21:   35:            int prev = matrix[i - 1][column];
+       21:   36:            int next = matrix[i][column];
+       21:   37:            if (next >= prev)
+        -:   38:            {
+       12:   39:                return 0;
+        -:   40:            }
+        -:   41:        }
+        2:   42:        return 1;
+        -:   43:    }
+        -:   44:}
+        -:   45:
+        7:   46:int main()
+        -:   47:{
+        -:   48:    int input[10][10];
+        -:   49:    int output[10];
+        -:   50:    int rows, columns, temp;
+        -:   51:
+        7:   52:    printf("Enter number of rows and columns: ");
+        7:   53:    temp = scanf("%d %d", &rows, &columns);
+        7:   54:    if (rows > 10 || rows <= 0 || columns > 10 || columns <= 0 || temp != 2)
+        -:   55:    {
+        2:   56:        printf("Wrong input!");
+        2:   57:        return INPUT_ERROR;
+        -:   58:    }
+        -:   59:
+        5:   60:    temp = matrix_input(rows, columns, input);
+        5:   61:    if (temp != 0)
+        -:   62:    {
+        1:   63:        printf("The error caused by incorrect input");
+        1:   64:        return ERROR_INPUT_MATRIX;
+        -:   65:    }
+        -:   66:
+       22:   67:    for (int column = 0; column < columns; column++)
+        -:   68:    {
+       18:   69:        output[column] = row_search(rows, column, input);
+       18:   70:        printf("%d ", output[column]);
+        -:   71:    }
+        4:   72:    printf("\n");
+        -:   73:
+        4:   74:    return 0;
+        -:   75:}

@@ -1,0 +1,7 @@
+Enter number of rows and columns: 3 3
+Enter the next line:
+-5 0 1
+Enter the next line:
+2 0 -1
+Enter the next line:
+0 0 -22

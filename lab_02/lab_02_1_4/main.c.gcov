@@ -1,0 +1,54 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:3
+        -:    1:#include <stdio.h>
+        -:    2:
+       21:    3:void swap(int *a, int *b)
+        -:    4:{
+       21:    5:    int temp = *a;
+       21:    6:    *a = *b;
+       21:    7:    *b = temp;
+       21:    8:}
+        -:    9:
+        3:   10:int main()
+        -:   11:{
+        -:   12:    int amount, temp;
+        -:   13:    int array[10];
+        3:   14:    int entered = 0;
+        3:   15:    printf("Enter the amount of input numbers:\n");
+        3:   16:    temp = scanf("%d", &amount);
+        3:   17:    if (temp != 1 || amount > 10 || amount <= 0)
+        -:   18:    {
+        1:   19:        printf("Input error");
+        1:   20:        return 1;
+        -:   21:    }
+        -:   22:
+        2:   23:    printf("Enter numbers: \n");
+       16:   24:    while (entered < amount)
+        -:   25:    {
+       14:   26:        temp = scanf("%d", &array[entered]);
+       14:   27:        if (temp == 1)
+        -:   28:        {
+       13:   29:            entered++;
+        -:   30:        }
+        -:   31:        else
+        -:   32:        {
+        1:   33:            fgetc(stdin);
+        -:   34:        }
+        -:   35:    }
+        -:   36:
+       13:   37:    for (int i = 1; i < amount; i++)
+        -:   38:    {
+       32:   39:        for (int j = i; j > 0 && array[j - 1] > array[j]; j--)
+        -:   40:        {
+       21:   41:            swap(&array[j - 1], &array[j]);
+        -:   42:        }
+        -:   43:    }
+        -:   44:
+       15:   45:    for (int i = 0; i < amount; i++)
+        -:   46:    {
+       13:   47:        printf("%d ", array[i]);
+        -:   48:    }
+        2:   49:    return 0;
+        -:   50:}

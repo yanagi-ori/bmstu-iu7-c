@@ -1,0 +1,148 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:-
+        -:    0:Runs:0
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:
+        -:    4:#define ERROR_WRONG_NUMBER_OF_ROWS_COLUMNS -1
+        -:    5:#define ERROR_MATRIX_INPUT -3
+        -:    6:#define ERROR_WRONG_NUMBER -4
+        -:    7:
+        -:    8:
+    #####:    9:int matrix_input(int rows, int columns, int matrix[][10])
+        -:   10:{
+        -:   11:    int temp;
+    #####:   12:    for (int i = 0; i < rows; i++)
+        -:   13:    {
+    #####:   14:        printf("Enter the next line: \n");
+    #####:   15:        for (int j = 0; j < columns; j++)
+        -:   16:        {
+    #####:   17:            temp = scanf("%d", &matrix[i][j]);
+    #####:   18:            if (temp != 1)
+        -:   19:            {
+    #####:   20:                return ERROR_MATRIX_INPUT;
+        -:   21:            }
+        -:   22:        }
+        -:   23:    }
+    #####:   24:    return 0;
+        -:   25:}
+        -:   26:
+        -:   27:// функция возврщает первую цифру числа
+    #####:   28:int get_first_digit(int number)
+        -:   29:{
+    #####:   30:    while (number >= 10)
+    #####:   31:        number /= 10;
+    #####:   32:    return number;
+        -:   33:}
+        -:   34:
+        -:   35:// функиция считает, выполняется ли заданное условие
+    #####:   36:int row_check(int columns, int *row, int number)
+        -:   37:{
+    #####:   38:    int start_with = 0, end_with = 0; // сколько числел, начинающихся с цифры, и сколько - заканчивается
+    #####:   39:    int *end_index = row + columns; // адрес последнего элемента строки
+        -:   40:    int first_check, last_check;
+    #####:   41:    for (int *item = row; item < end_index; item++)
+        -:   42:    {
+    #####:   43:        first_check = get_first_digit(abs(*item));
+    #####:   44:        last_check = (abs(*item)) % 10;
+    #####:   45:        if (first_check == number)
+        -:   46:        {
+    #####:   47:            start_with++;
+        -:   48:        }
+    #####:   49:        if (last_check == number)
+        -:   50:        {
+    #####:   51:            end_with++;
+        -:   52:        }
+        -:   53:    }
+    #####:   54:    if (start_with == end_with && start_with > 0)
+        -:   55:    {
+    #####:   56:        return 0; // условие выполняется
+        -:   57:    }
+        -:   58:    else
+        -:   59:    {
+    #####:   60:        return 1; // условие не выполняется
+        -:   61:    }
+        -:   62:}
+        -:   63:
+    #####:   64:void matrix_output(int rows, int columns, int matrix[][10])
+        -:   65:{
+    #####:   66:    for (int i = 0; i < rows; i++)
+        -:   67:    {
+    #####:   68:        for (int j = 0; j < columns; j++)
+        -:   69:        {
+    #####:   70:            printf("%d ", matrix[i][j]);
+        -:   71:        }
+    #####:   72:        printf("\n");
+        -:   73:    }
+    #####:   74:}
+        -:   75:
+    #####:   76:void free_space(int row, int rows, int columns, int matrix[][10])
+        -:   77:{
+    #####:   78:    for (int i = rows; i > row; i--)
+        -:   79:    {
+    #####:   80:        for (int j = 0; j < columns; j++)
+        -:   81:        {
+    #####:   82:            matrix[i][j] = matrix[i - 1][j];
+        -:   83:        }
+        -:   84:    }
+    #####:   85:}
+        -:   86:
+    #####:   87:void enter_new_row(int row, int columns, int matrix[][10])
+        -:   88:{
+    #####:   89:    for (int i = 0; i < columns; i++)
+        -:   90:    {
+    #####:   91:        matrix[row][i] = 100;
+        -:   92:    }
+    #####:   93:}
+        -:   94:
+    #####:   95:int matrix_process(int rows, int columns, int matrix[][10], int number)
+        -:   96:{
+    #####:   97:    for (int row = 0; row < rows; row++)
+        -:   98:    {
+    #####:   99:        if (!row_check(columns, matrix[row], number))
+        -:  100:        {
+    #####:  101:            rows++;
+    #####:  102:            free_space(row + 1, rows, columns, matrix);
+    #####:  103:            enter_new_row(row + 1, columns, matrix);
+        -:  104:        }
+        -:  105:    }
+    #####:  106:    return rows;
+        -:  107:}
+        -:  108:
+        -:  109:
+    #####:  110:int main()
+        -:  111:{
+        -:  112:    int input[21][10];
+        -:  113:    int temp, number;
+        -:  114:    int rows, columns;
+        -:  115:
+    #####:  116:    printf("Enter number of rows and columns: ");
+    #####:  117:    temp = scanf("%d %d", &rows, &columns);
+    #####:  118:    if (rows > 10 || rows <= 0 || columns > 10 || columns <= 0 || temp != 2)
+        -:  119:    {
+    #####:  120:        printf("Wrong input");
+    #####:  121:        return ERROR_WRONG_NUMBER_OF_ROWS_COLUMNS;
+        -:  122:    }
+        -:  123:
+    #####:  124:    temp = matrix_input(rows, columns, input);
+    #####:  125:    if (temp != 0)
+        -:  126:    {
+    #####:  127:        printf("Matrix input error");
+    #####:  128:        return ERROR_MATRIX_INPUT;
+        -:  129:    }
+    #####:  130:    printf("Enter a number: ");
+    #####:  131:    temp = scanf("%d", &number);
+    #####:  132:    if (temp != 1 || number < 0 || number >= 10)
+        -:  133:    {
+    #####:  134:        printf("Entered a wrong number");
+    #####:  135:        return ERROR_WRONG_NUMBER;
+        -:  136:    }
+    #####:  137:    printf("\n");
+        -:  138:
+    #####:  139:    temp = matrix_process(rows, columns, input, number);
+        -:  140:
+    #####:  141:    matrix_output(temp, columns, input);
+        -:  142:
+    #####:  143:    return 0;
+        -:  144:}

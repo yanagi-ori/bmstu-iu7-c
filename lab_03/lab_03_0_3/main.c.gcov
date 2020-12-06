@@ -1,0 +1,100 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:5
+        -:    1:#include <stdio.h>
+        -:    2:
+        -:    3:#define ARRAY_LEN 10
+        -:    4:#define RC_INPUT_ERROR -1
+        -:    5:#define MATRIX_INPUT_ERROR -2
+        -:    6:#define ABORT_OPERATION 1
+        -:    7:
+        4:    8:int matrix_input(int rows, int columns, int matrix[][ARRAY_LEN], int sub_array[ARRAY_LEN])
+        -:    9:{
+        -:   10:    int temp;
+       20:   11:    for (int i = 0; i < rows; i++)
+        -:   12:    {
+       17:   13:        sub_array[i] = 0;
+       17:   14:        printf("Enter the next line: \n");
+      138:   15:        for (int j = 0; j < columns; j++)
+        -:   16:        {
+      122:   17:            temp = scanf("%d", &matrix[i][j]);
+      122:   18:            if (temp != 1)
+        -:   19:            {
+        1:   20:                return ABORT_OPERATION;
+        -:   21:            }
+      121:   22:            sub_array[i] += matrix[i][j];
+        -:   23:        }
+        -:   24:    }
+        3:   25:    return 0;
+        -:   26:}
+        -:   27:
+        -:   28:
+        3:   29:void matrix_output(int rows, int columns, int matrix[][ARRAY_LEN])
+        -:   30:{
+       19:   31:    for (int i = 0; i < rows; i++)
+        -:   32:    {
+      137:   33:        for (int j = 0; j < columns; j++)
+        -:   34:        {
+      121:   35:            printf("%d ", matrix[i][j]);
+        -:   36:        }
+       16:   37:        printf("\n");
+        -:   38:    }
+        3:   39:}
+        -:   40:
+       64:   41:void swap(int *a, int *b)
+        -:   42:{
+       64:   43:    int temp = *a;
+       64:   44:    *a = *b;
+       64:   45:    *b = temp;
+       64:   46:}
+        -:   47:
+        3:   48:void matrix_process(int matrix[][ARRAY_LEN], int rows, int columns, int sub_array[ARRAY_LEN])
+        -:   49:{
+        -:   50:    int least_sum, index_to_change;
+       19:   51:    for (int i = 0; i < rows; i++)
+        -:   52:    {
+       16:   53:        least_sum = sub_array[i];
+       16:   54:        index_to_change = -1;
+       71:   55:        for (int j = i + 1; j < rows; j++)
+        -:   56:        {
+       55:   57:            if (sub_array[j] < least_sum)
+        -:   58:            {
+       15:   59:                index_to_change = j;
+       15:   60:                least_sum = sub_array[index_to_change];
+        -:   61:            }
+        -:   62:        }
+       16:   63:        if (index_to_change != -1)
+        -:   64:        {
+        8:   65:            swap(&sub_array[i], &sub_array[index_to_change]);
+       64:   66:            for (int j = 0; j < columns; j++)
+        -:   67:            {
+       56:   68:                swap(&matrix[i][j], &matrix[index_to_change][j]);
+        -:   69:            }
+        -:   70:        }
+        -:   71:    }
+        3:   72:}
+        -:   73:
+        5:   74:int main()
+        -:   75:{
+        -:   76:    int matrix[ARRAY_LEN][ARRAY_LEN], rows, columns;
+        -:   77:    int sub_array[ARRAY_LEN];
+        -:   78:    int temp;
+        -:   79:
+        5:   80:    printf("Enter numbers of rows and columns: ");
+        5:   81:    temp = scanf("%d %d", &rows, &columns);
+        5:   82:    if (temp != 2 || rows > ARRAY_LEN || rows <= 0 || columns > ARRAY_LEN || columns <= 0)
+        -:   83:    {
+        1:   84:        printf("Wrong input");
+        1:   85:        return RC_INPUT_ERROR;
+        -:   86:    }
+        4:   87:    if (matrix_input(rows, columns, matrix, sub_array))
+        -:   88:    {
+        1:   89:        printf("Matrix input error");
+        1:   90:        return MATRIX_INPUT_ERROR;
+        -:   91:    }
+        -:   92:
+        3:   93:    matrix_process(matrix, rows, columns, sub_array);
+        3:   94:    matrix_output(rows, columns, matrix);
+        3:   95:    return 0;
+        -:   96:}
