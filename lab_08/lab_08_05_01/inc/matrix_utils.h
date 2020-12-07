@@ -9,4 +9,10 @@ int delete_row(int **matrix, unsigned int *rows, unsigned int columns);
 
 int delete_column(int **matrix, unsigned int rows, unsigned int *columns);
 
+int copy_old_to_new(int **source_matrix, int **new_matrix, unsigned int rows, unsigned int cols, unsigned int target);
+
+int add_new_row(int **matrix, unsigned int *rows, unsigned int columns, unsigned int target);
+
+int add_new_column(int **matrix, unsigned int rows, unsigned int *columns, unsigned int target);
+
 #endif //LAB_08_05_01_MATRIX_UTILS_H

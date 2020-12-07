@@ -81,7 +81,6 @@ int main()
             free_matrix(matrix_b);
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
-        output_matrix(matrix_a, k, k);
     }
 
     // squaring matrix B
@@ -96,15 +95,33 @@ int main()
             free_matrix(matrix_b);
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
-        output_matrix(matrix_b, s, s);
     }
 
     // matrices enlargement
     int z = max(k, s);
 
-
-
+    int **matrix_a_new = matrix_enlargement(matrix_a, k, k, z);
+    if (matrix_a_new == NULL)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        return MATRIX_ENLARGEMENT_ERROR;
+    }
     free_matrix(matrix_a);
+
+    int **matrix_b_new = matrix_enlargement(matrix_b, s, s, z);
+    if (matrix_b_new == NULL)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        free_matrix(matrix_a_new);
+        return MATRIX_ENLARGEMENT_ERROR;
+    }
     free_matrix(matrix_b);
+
+    output_matrix(matrix_a_new, z, z);
+    output_matrix(matrix_b_new, z, z);
+    // from here no need to free the memory reserved by old matrices
+
     return 0;
 }

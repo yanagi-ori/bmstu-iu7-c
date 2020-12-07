@@ -7,4 +7,6 @@
 
 int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int target);
 
+int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int columns, unsigned int target);
+
 #endif //LAB_08_05_01_MATRIX_OPERATIONS_H
