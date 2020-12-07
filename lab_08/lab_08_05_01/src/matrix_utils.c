@@ -143,7 +143,7 @@ int find_max_in_row(int **matrix, unsigned int row, unsigned columns)
 
 int add_new_column(int **matrix, unsigned int rows, unsigned int *columns, unsigned int target)
 {
-    if (rows == target)
+    if (*columns == target)
     {
         return 0;
     }
