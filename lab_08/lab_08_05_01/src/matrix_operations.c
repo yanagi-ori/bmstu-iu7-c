@@ -14,6 +14,11 @@ int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int
 {
     int rc;
 
+    if (rows == 0 || columns == 0 || target == 0)
+    {
+        return MATRIX_DATA_INPUT_ERROR;
+    }
+
     if (rows < target && columns < target)
     {
         return MATRIX_RANGE_SUSPECT;
@@ -41,6 +46,11 @@ int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int
 int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int columns, unsigned int target)
 {
     int rc;
+
+    if (rows == 0 || columns == 0 || target == 0)
+    {
+        return NULL;
+    }
 
     if (target < rows || target < columns)
     {
