@@ -32,6 +32,7 @@ int main()
         {
             if (scanf("%d", &matrix_a[i][j]) != 1)
             {
+                free_matrix(matrix_a);
                 return MATRIX_DATA_INPUT_ERROR;
             }
         }
@@ -45,11 +46,13 @@ int main()
     rc = scanf("%d%d", &p, &q);
     if (rc != 2)
     {
+        free_matrix(matrix_a);
         MATRIX_DATA_INPUT_ERROR;
     }
     matrix_b = create_matrix(p, q);
     if (matrix_b == NULL)
     {
+        free_matrix(matrix_a);
         return MATRIX_MEMORY_ALLOCATION_ERROR;
     }
     printf("Input elements of the matrix B: \n");
@@ -59,6 +62,8 @@ int main()
         {
             if (scanf("%d", &matrix_b[i][j]) != 1)
             {
+                free_matrix(matrix_a);
+                free_matrix(matrix_b);
                 return MATRIX_DATA_INPUT_ERROR;
             }
         }
@@ -72,6 +77,8 @@ int main()
         rc = squaring(matrix_a, m, n, k);
         if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
+            free_matrix(matrix_a);
+            free_matrix(matrix_b);
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
         output_matrix(matrix_a, k, k);
@@ -85,6 +92,8 @@ int main()
         rc = squaring(matrix_b, p, q, s);
         if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
+            free_matrix(matrix_a);
+            free_matrix(matrix_b);
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
         output_matrix(matrix_b, s, s);
