@@ -3,6 +3,7 @@
 #include "../inc/errors.h"
 #include "../inc/utils.h"
 #include "../inc/matrix_operations.h"
+#include "../inc/io.h"
 
 int main()
 {
@@ -74,7 +75,7 @@ int main()
         {
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
-
+        output_matrix(matrix_a, k, k);
     }
 
     // squaring matrix B
@@ -88,6 +89,7 @@ int main()
         {
             return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
+        output_matrix(matrix_b, s, s);
     }
 
     free_matrix(matrix_a);

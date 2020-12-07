@@ -2,21 +2,23 @@
 // Created by Ivan Bogatyrev on 12/6/2020.
 //
 
-int min(unsigned int a, unsigned int b)
+unsigned int min(unsigned int a, unsigned int b)
 {
-    if (a - b >= 0)
+    if (a >= b)
     {
-        return a;
+        return b;
     }
     else
     {
-        return b;
+        return a;
     }
 }
 
 void coord_of_min_in_matrix(int **matrix, unsigned int rows, unsigned int columns, unsigned int *x, unsigned int *y)
 {
     int min = matrix[0][0];
+    *y = 0;
+    *x = 0;
 
     for (unsigned int i = 0; i < rows; i++)
     {

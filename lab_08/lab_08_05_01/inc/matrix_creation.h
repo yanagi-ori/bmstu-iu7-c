@@ -5,7 +5,7 @@
 #ifndef LAB_08_05_01_MATRIX_CREATION_H
 #define LAB_08_05_01_MATRIX_CREATION_H
 
-int **create_matrix(unsigned int m, unsigned int n);
+int **create_matrix(unsigned int rows, unsigned int cols);
 
 void free_matrix(int **matrix);
 

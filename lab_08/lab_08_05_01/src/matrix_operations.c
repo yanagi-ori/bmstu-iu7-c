@@ -7,16 +7,11 @@
 #include "../inc/matrix_creation.h"
 #include "../inc/errors.h"
 #include "../inc/utils.h"
+#include "../inc/io.h"
 
 
 int delete_row(int **matrix, unsigned int *rows, unsigned int columns)
 {
-    int **new_matrix = create_matrix((*rows)--, columns);
-    if (new_matrix == NULL)
-    {
-        return MATRIX_MEMORY_ALLOCATION_ERROR;
-    }
-
     unsigned int x, y;
     coord_of_min_in_matrix(matrix, *rows, columns, &x, &y);
 
@@ -29,18 +24,19 @@ int delete_row(int **matrix, unsigned int *rows, unsigned int columns)
         }
         for (unsigned int j = 0; j < columns; j++)
         {
-            new_matrix[cur_x][cur_y] = matrix[i][j];
+            matrix[cur_x][cur_y] = matrix[i][j];
             cur_y++;
         }
+        cur_y = 0;
         cur_x++;
     }
-
+    (*rows)--;
     return 0;
 }
 
 int delete_column(int **matrix, unsigned int rows, unsigned int *columns)
 {
-    int **new_matrix = create_matrix(rows, (*columns)--);
+    int **new_matrix = create_matrix(rows, (*columns) - 1);
     if (new_matrix == NULL)
     {
         return MATRIX_MEMORY_ALLOCATION_ERROR;
@@ -60,16 +56,18 @@ int delete_column(int **matrix, unsigned int rows, unsigned int *columns)
                 cur_y++;
             }
         }
+        cur_y = 0;
         cur_x++;
     }
 
+    (*columns)--;
     return 0;
 }
 
 int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int target)
 {
     int rc;
-    while (rows != target || columns != target)
+    while (rows > target || columns > target)
     {
         if (rows > target)
         {

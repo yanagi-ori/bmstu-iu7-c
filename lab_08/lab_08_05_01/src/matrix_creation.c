@@ -6,26 +6,26 @@
 
 #include "../inc/errors.h"
 
-int **create_matrix(unsigned int m, unsigned int n)
+int **create_matrix(unsigned int rows, unsigned int cols)
 {
     int **pointers, *data;
 
-    pointers = malloc(m * sizeof(int *));
+    pointers = malloc(rows * sizeof(int *));
     if (!pointers)
     {
         return NULL;
     }
 
-    data = malloc(m * n * sizeof(int));
+    data = malloc(rows * cols * sizeof(int));
     if (!data)
     {
         free(pointers);
         return NULL;
     }
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < rows; i++)
     {
-        pointers[i] = data + i * m;
+        pointers[i] = data + i * cols;
     }
 
     return pointers;
