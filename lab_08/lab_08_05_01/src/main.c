@@ -65,11 +65,10 @@ int main()
     }
 
     // squaring matrix A
-    unsigned int k;
+    unsigned int k = min(m, n);
 
     if (m != n)
     {
-        k = min(m, n);
         rc = squaring(matrix_a, m, n, k);
         if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
@@ -79,11 +78,10 @@ int main()
     }
 
     // squaring matrix B
-    unsigned int s;
+    unsigned int s = min(p, q);
 
     if (p != q)
     {
-        s = min(p, q);
         rc = squaring(matrix_b, p, q, s);
         if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
