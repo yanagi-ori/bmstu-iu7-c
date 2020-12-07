@@ -14,6 +14,18 @@ unsigned int min(unsigned int a, unsigned int b)
     }
 }
 
+unsigned int max(unsigned int a, unsigned int b)
+{
+    if (a >= b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
 void coord_of_min_in_matrix(int **matrix, unsigned int rows, unsigned int columns, unsigned int *x, unsigned int *y)
 {
     int min = matrix[0][0];
