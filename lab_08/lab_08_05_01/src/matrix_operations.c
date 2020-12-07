@@ -97,3 +97,30 @@ int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int co
     return new_matrix;
 }
 
+int **multiply_matrices(int **matrix_a, int **matrix_b, unsigned int size)
+{
+    if (size == 0)
+    {
+        return NULL;
+    }
+
+    int **result_matrix = create_matrix(size, size);
+    if (result_matrix == NULL)
+    {
+        return NULL;
+    }
+
+    for (unsigned int i = 0; i < size; i++)
+    {
+        for (unsigned int j = 0; j < size; j++)
+        {
+            result_matrix[i][j] = find_mult_result(matrix_a, matrix_b, size, i, j);
+            if (result_matrix[i][j] < 0)
+            {
+                return NULL;
+            }
+        }
+    }
+
+    return result_matrix;
+}

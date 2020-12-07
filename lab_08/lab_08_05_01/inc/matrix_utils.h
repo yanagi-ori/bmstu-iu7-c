@@ -15,4 +15,6 @@ int add_new_row(int **matrix, unsigned int *rows, unsigned int columns, unsigned
 
 int add_new_column(int **matrix, unsigned int rows, unsigned int *columns, unsigned int target);
 
+int find_mult_result(int **matrix_a, int **matrix_b, unsigned int size, unsigned int x, unsigned int y);
+
 #endif //LAB_08_05_01_MATRIX_UTILS_H

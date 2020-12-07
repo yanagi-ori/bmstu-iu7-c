@@ -166,3 +166,13 @@ int add_new_column(int **matrix, unsigned int rows, unsigned int *columns, unsig
     (*columns)++;
     return 0;
 }
+
+int find_mult_result(int **matrix_a, int **matrix_b, unsigned int size, unsigned int x, unsigned int y)
+{
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+    {
+        sum += (matrix_a[x][i] * matrix_b[i][y]);
+    }
+    return sum;
+}

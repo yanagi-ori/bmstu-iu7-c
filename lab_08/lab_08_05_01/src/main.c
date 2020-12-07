@@ -121,7 +121,18 @@ int main()
 
     output_matrix(matrix_a_new, z, z);
     output_matrix(matrix_b_new, z, z);
+
     // from here no need to free the memory reserved by old matrices
+    // multiplication
+    int **result_matrix = multiply_matrices(matrix_a_new, matrix_b_new, z);
+    free_matrix(matrix_a_new);
+    free_matrix(matrix_b_new);
+    if (result_matrix == NULL)
+    {
+        return MATRIX_MULTIPLICATION_ERROR;
+    }
+
+    output_matrix(result_matrix, z, z);
 
     return 0;
 }
