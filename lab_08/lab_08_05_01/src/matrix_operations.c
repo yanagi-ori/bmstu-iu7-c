@@ -67,23 +67,22 @@ int delete_column(int **matrix, unsigned int rows, unsigned int *columns)
 int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int target)
 {
     int rc;
-    while (rows > target || columns > target)
+
+    while (rows > target)
     {
-        if (rows > target)
+
+        rc = delete_row(matrix, &rows, columns);
+        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
-            rc = delete_row(matrix, &rows, columns);
-            if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
-            {
-                return MATRIX_MEMORY_ALLOCATION_ERROR;
-            }
+            return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
-        else if (columns > target)
+    }
+    while (columns > target)
+    {
+        rc = delete_column(matrix, rows, &columns);
+        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
         {
-            rc = delete_column(matrix, rows, &columns);
-            if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
-            {
-                return MATRIX_MEMORY_ALLOCATION_ERROR;
-            }
+            return MATRIX_MEMORY_ALLOCATION_ERROR;
         }
     }
 
