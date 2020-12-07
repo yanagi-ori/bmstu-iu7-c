@@ -36,12 +36,6 @@ int delete_row(int **matrix, unsigned int *rows, unsigned int columns)
 
 int delete_column(int **matrix, unsigned int rows, unsigned int *columns)
 {
-    int **new_matrix = create_matrix(rows, (*columns) - 1);
-    if (new_matrix == NULL)
-    {
-        return MATRIX_MEMORY_ALLOCATION_ERROR;
-    }
-
     unsigned int x, y;
     coord_of_min_in_matrix(matrix, rows, *columns, &x, &y);
 
@@ -52,7 +46,7 @@ int delete_column(int **matrix, unsigned int rows, unsigned int *columns)
         {
             if (j != y)
             {
-                new_matrix[cur_x][cur_y] = matrix[i][j];
+                matrix[cur_x][cur_y] = matrix[i][j];
                 cur_y++;
             }
         }
@@ -87,5 +81,10 @@ int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int
     }
 
     return 0;
+}
+
+int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int columns, unsigned int target){
+    int **new_matrix = create_matrix(target, target);
+
 }
 

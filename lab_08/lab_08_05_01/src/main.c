@@ -90,6 +90,11 @@ int main()
         output_matrix(matrix_b, s, s);
     }
 
+    // matrices enlargement
+    int z = max(k, s);
+
+
+
     free_matrix(matrix_a);
     free_matrix(matrix_b);
     return 0;
