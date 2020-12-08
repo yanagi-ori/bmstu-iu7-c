@@ -86,8 +86,7 @@ short int write_new_data(FILE *file_stream, int *array_b, const int *array_e)
     char temp[100];
     for (int *p_int = array_b; p_int < array_e; p_int++)
     {
-        snprintf(temp, sizeof(temp), "%d", *p_int);
-        fprintf(file_stream, "%s ", temp);
+        fprintf(file_stream, "%d ", *p_int);
     }
     return 0;
 }
