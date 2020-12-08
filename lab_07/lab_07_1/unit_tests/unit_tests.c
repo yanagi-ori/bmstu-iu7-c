@@ -79,7 +79,6 @@ Suite *element_counter_suite(void)
 
     return s;
 }
-END_TEST
 
 /* filter */
 START_TEST(test_filter_mixed)

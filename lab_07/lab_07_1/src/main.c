@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         FILE *file = fopen(argv[1], "r");
         if (file != NULL)
         {
-            unsigned short int elements_amount = 0;
+            unsigned short int elements_amount;
             code_error = elements_counter(file, &elements_amount);
             if (code_error == 0)
             {

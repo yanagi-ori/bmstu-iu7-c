@@ -10,6 +10,7 @@ short int elements_counter(FILE *file_stream, unsigned short int *counter)
 {
     int amount = 1;
     int temp;
+    *counter = 0;
 
     while (amount != EOF)
     {
