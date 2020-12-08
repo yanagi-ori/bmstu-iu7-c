@@ -100,7 +100,8 @@ int main(int argc, char *argv[])
     }
     else
     {
-        pb_dst = array_pointer, pe_dst = array_end;
+        pb_dst = array_pointer;
+        pe_dst = array_end;
     }
 
     mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare);
