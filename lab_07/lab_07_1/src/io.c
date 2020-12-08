@@ -39,7 +39,7 @@ short int array_filling(FILE *file_stream, int *array_pointer, const int *const 
     int counter = 0;
     int read_result;
 
-    if (array_pointer == NULL)
+    if (array_pointer == NULL || array_end_pointer == NULL)
     {
         return ARRAY_POINTER_ERROR;
     }
