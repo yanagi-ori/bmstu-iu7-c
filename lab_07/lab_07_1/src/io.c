@@ -70,9 +70,10 @@ short int array_filling(FILE *file_stream, int *array_pointer, const int *const 
     return 0;
 }
 
-short int create_new_file(FILE *file_stream, char *name)
+short int create_new_file(FILE **file_stream, char *name)
 {
-    file_stream = fopen(name, "w");
+    fclose(*file_stream);
+    *file_stream = fopen(name, "w");
     if (file_stream == NULL)
     {
         return ERROR_IO;

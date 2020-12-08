@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
     mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare);
 
-    code_error = create_new_file(file, argv[2]);
+    code_error = create_new_file(&file, argv[2]);
     if (code_error == ERROR_IO)
     {
         fclose(file);
