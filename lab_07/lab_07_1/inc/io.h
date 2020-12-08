@@ -15,4 +15,3 @@ short int create_new_file(FILE *file_stream, char *name);
 
 short int write_new_data(FILE *file_stream, int *array_b, const int *array_e);
 
-void debug_array_print(int *start, int *end);

@@ -83,7 +83,6 @@ short int create_new_file(FILE *file_stream, char *name)
 
 short int write_new_data(FILE *file_stream, int *array_b, const int *array_e)
 {
-    char temp[100];
     for (int *p_int = array_b; p_int < array_e; p_int++)
     {
         fprintf(file_stream, "%d ", *p_int);
@@ -91,14 +90,3 @@ short int write_new_data(FILE *file_stream, int *array_b, const int *array_e)
     return 0;
 }
 
-
-void debug_array_print(int *start, int *end)
-{
-    int *i = start;
-    while (i < end)
-    {
-        printf("%d ", *i);
-        i++;
-    }
-    printf("\n");
-}
