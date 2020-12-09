@@ -7,10 +7,10 @@
 
 short int free_memory(const int *pointer);
 
-void mysort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+void mysort(void *base, size_t nmemb, size_t size, int (*compare)(const void *, const void *));
 
 int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
 
-int compare_int(const void *x1, const void *x2);
+int compare(const void *x1, const void *x2);
 
 #endif //LAB_07_1_ARRAY_UTILS_H

@@ -66,7 +66,7 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
     return 0;
 }
 
-int compare_int(const void *x1, const void *x2)
+int compare(const void *x1, const void *x2)
 {
     return (*(int *) x1 - *(int *) x2);
 }
