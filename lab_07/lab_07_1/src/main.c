@@ -40,11 +40,15 @@ int main(int argc, char *argv[])
                                 code_error = key(array_pointer, array_end, &pb_dst, &pe_dst);
                                 if (code_error == 0)
                                 {
-                                    mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare);
+                                    mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare_int);
                                     code_error = create_new_file(&file, argv[2]);
                                     if (code_error == 0)
                                     {
                                         write_new_data(file, pb_dst, pe_dst);
+                                    }
+                                    else
+                                    {
+                                        code_error = ERROR_IO;
                                     }
                                     free(pb_dst);
                                 }
@@ -56,7 +60,7 @@ int main(int argc, char *argv[])
                         }
                         else
                         {
-                            mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare);
+                            mysort(pb_dst, pe_dst - pb_dst, sizeof(int), compare_int);
                             code_error = create_new_file(&file, argv[2]);
                             if (code_error == 0)
                             {
