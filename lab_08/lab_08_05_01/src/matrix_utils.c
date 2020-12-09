@@ -99,7 +99,7 @@ int find_geom_mean_of_col(int **matrix, unsigned int rows, unsigned int column)
     {
         geom_mean *= abs(matrix[i][column]);
     }
-    return pow(geom_mean, 1.0 / rows);
+    return (int) pow(geom_mean, 1.0 / rows);
 }
 
 int add_new_row(int **matrix, unsigned int *rows, unsigned int columns, unsigned int target)

@@ -47,7 +47,7 @@ int main()
     if (rc != 2)
     {
         free_matrix(matrix_a);
-        MATRIX_DATA_INPUT_ERROR;
+        return MATRIX_DATA_INPUT_ERROR;
     }
     matrix_b = create_matrix(p, q);
     if (matrix_b == NULL)
