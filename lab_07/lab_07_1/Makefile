@@ -4,7 +4,7 @@ OBJS := ./out/array_utils.o ./out/io.o
 CC := gcc
 
 ifeq ($(mode), debug)
-	CFLAGS += -g3
+	CFLAGS += -ggdb3
 endif
 
 ifeq ($(mode), release)
@@ -19,7 +19,7 @@ app.exe: ./out/main.o $(OBJS)
 	$(CC) $^ -o $@
 
 unit_tests.exe: ./out/unit_test.o $(OBJS)
-	$(CC) $^ -lcheck -o $@
+	$(CC) $^ -lcheck -lpthread -lrt -lsubunit -lm -o $@
 
 ./out/io.o : ./src/io.c ./inc/io.h ./inc/errors.h
 	$(CC) $(CFLAGS) -c $< -o $@
