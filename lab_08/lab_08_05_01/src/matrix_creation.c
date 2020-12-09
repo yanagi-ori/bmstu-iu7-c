@@ -10,6 +10,11 @@ int **create_matrix(unsigned int rows, unsigned int cols)
 {
     int **pointers, *data;
 
+    if (rows <= 0 || cols <= 0)
+    {
+        return NULL;
+    }
+
     pointers = malloc(rows * sizeof(int *));
     if (!pointers)
     {

@@ -10,7 +10,7 @@ int main()
     int rc;
 
     // first matrix data input
-    unsigned int m, n;
+    int m, n;
     int **matrix_a;
 
     printf("Input number of rows and columns of the matrix A: \n");
@@ -39,7 +39,7 @@ int main()
     }
 
     // second matrix data input
-    unsigned int p, q;
+    int p, q;
     int **matrix_b;
 
     printf("Input number of rows and columns of the matrix B: ");
