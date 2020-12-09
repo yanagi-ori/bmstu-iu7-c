@@ -133,6 +133,7 @@ int main()
     }
 
     output_matrix(result_matrix, z, z);
+    free_matrix(result_matrix);
 
     return 0;
 }
