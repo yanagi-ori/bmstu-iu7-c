@@ -162,26 +162,17 @@ START_TEST(test_filter_all_pos)
     }
     free_memory(pb_dst);
 }
-
 END_TEST
 
-//START_TEST(test_filter_one_neg)
-//{
-//    int array[] = {-2};
-//    int *pb_dst = NULL, *pe_dst = NULL;
-//    if (key(array, array + 1, &pb_dst, &pe_dst) == 0)
-//    {
-//        ck_assert_int_eq(pe_dst - pb_dst, 1);
-//        ck_assert_int_eq(array[0], pb_dst[0]);
-//    }
-//    else
-//    {
-//        ck_abort_msg("Error in the filter function");
-//    }
-//    free_memory(pb_dst);
-//}
-//
-//END_TEST
+START_TEST(test_filter_one_neg)
+{
+    int array[] = {-2};
+    int *pb_dst = NULL, *pe_dst = NULL;
+    int error_code = key(array, array + 1, &pb_dst, &pe_dst);
+    ck_assert_int_eq(error_code, WRONG_DATA);
+    free_memory(pb_dst);
+}
+END_TEST
 
 START_TEST(test_filter_invalid_params)
 {
@@ -207,10 +198,10 @@ Suite *filter_suite(void)
     tcase_add_test(tc_pos, test_filter_mixed);
     tcase_add_test(tc_pos, test_filter_all_neg);
     tcase_add_test(tc_pos, test_filter_all_pos);
-    //tcase_add_test(tc_pos, test_filter_one_neg);
 
     tc_neg = tcase_create("negatives");
     tcase_add_test(tc_neg, test_filter_invalid_params);
+    tcase_add_test(tc_neg, test_filter_one_neg);
 
     suite_add_tcase(suite, tc_pos);
     suite_add_tcase(suite, tc_neg);
@@ -220,6 +211,7 @@ Suite *filter_suite(void)
 /*sort*/
 
 #define SIZE 25
+
 int int_cmp(const void *x, const void *y)
 {
     return *(int *) x - *(int *) y;
