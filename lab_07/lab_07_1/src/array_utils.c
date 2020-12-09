@@ -31,6 +31,9 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
     }
 
     int has_negative = 0;
+    int amount;
+
+    const int *last_negative = pe_src - 1;
     const int *current_pointer = pb_src;
 
     while (current_pointer < pe_src)
@@ -43,21 +46,22 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
         current_pointer++;
     }
 
-    int amount = last_negative - pb_src + has_negative;
+    amount = last_negative - pb_src + 1 - has_negative;
+
     if (amount == 0)
     {
         return WRONG_DATA;
     }
 
-    current_pointer = pb_src;
     *pb_dst = malloc(sizeof(int) * amount);
-    if (*pb_dst == NULL)
+    if (pb_dst == NULL)
     {
-        return WRONG_DATA;
+        return ARRAY_MEMORY_ALLOCATION_ERROR;
     }
+
     *pe_dst = *pb_dst + amount;
 
-    copy_arr(pb_dst, pe_dst, current_pointer, amount);
+    copy_arr(pb_dst, pe_dst, pb_src, amount);
 
     return 0;
 }
