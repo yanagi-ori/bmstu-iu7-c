@@ -11,6 +11,6 @@ void mysort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, c
 
 int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
 
-int compare(const void *x1, const void *x2);
+int compare_int(const void *x1, const void *x2);
 
 #endif //LAB_07_1_ARRAY_UTILS_H

@@ -32,7 +32,6 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
 
     int has_negative = 0;
     const int *current_pointer = pb_src;
-    const int *last_negative = pe_src;
 
     while (current_pointer < pe_src)
     {
@@ -63,7 +62,7 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
     return 0;
 }
 
-int compare(const void *x1, const void *x2)
+int compare_int(const void *x1, const void *x2)
 {
     return (*(int *) x1 - *(int *) x2);
 }
@@ -79,7 +78,7 @@ void swap(void *x, void *y, unsigned int size)
     } while (--size > 0);
 }
 
-void mysort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *))
+void mysort(void *base, size_t nmemb, size_t size, int (*compare)(const void *, const void *))
 {
     char *right = (char *) base + size * (nmemb);
 
@@ -88,7 +87,7 @@ void mysort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, c
         for (char *i = left; i > (char *) base;)
         {
             char *temp = i - size;
-            if ((compar)((void *) i, (void *) temp) <= 0)
+            if ((compare)((void *) i, (void *) temp) <= 0)
             {
                 swap((void *) i, (void *) temp, size);
             }
