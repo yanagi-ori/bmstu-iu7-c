@@ -19,7 +19,7 @@ app.exe: ./out/main.o $(OBJS)
 	$(CC) $^ -o $@
 
 unit_tests.exe: ./out/check_main.o ./out/check_elements_counter.o ./out/check_sort.o ./out/check_key.o $(OBJS)
-	$(CC) $^ -lcheck -lpthread -lrt -lsubunit -lm -o $@
+	$(CC) $^ -lcheck -o $@
 
 ./out/io.o : ./src/io.c ./inc/io.h ./inc/errors.h
 	$(CC) $(CFLAGS) -c $< -o $@
