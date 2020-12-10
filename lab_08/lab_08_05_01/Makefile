@@ -1,7 +1,7 @@
 CFILES := ./../src/main.c ./../src/io.c ./../src/matrix_creation.c \
 ./../src/matrix_operation.c ./../src/matrix_utils.c ./../src/utils.c
 
-CFLAGS := -Wall -Werror -std=c99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic
+CFLAGS := -Wall -Werror -std=c99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
 OBJS := ./out/matrix_creation.o ./out/io.o ./out/matrix_utils.o ./out/matrix_operation.o ./out/utils.o
 CC := gcc
 
@@ -14,7 +14,7 @@ ifeq ($(mode), release)
 endif
 
 app.exe: ./out/main.o $(OBJS)
-	$(CC) $^ -o $@ -lm
+	$(CC) $^ -lcheck -lpthread -lrt -lsubunit -lm -o $@
 
 unit_tests.exe: ./out/unit_test.o $(OBJS)
 	$(CC) $^ -lcheck -o $@
@@ -29,7 +29,7 @@ unit_tests.exe: ./out/unit_test.o $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ./out/matrix_utils.o : ./src/matrix_utils.c ./inc/matrix_utils.h ./inc/errors.h ./inc/utils.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -lm
 
 ./out/utils.o : ./src/utils.c ./inc/utils.h ./inc/errors.h
 	$(CC) $(CFLAGS) -c $< -o $@

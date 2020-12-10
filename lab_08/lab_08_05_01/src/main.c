@@ -67,12 +67,12 @@ int main()
                                             if (result_matrix != NULL)
                                             {
                                                 output_matrix(result_matrix, z, z);
+                                                free_matrix(result_matrix);
                                             }
                                             else
                                             {
                                                 rc = MATRIX_MULTIPLICATION_ERROR;
                                             }
-                                            free_matrix(result_matrix);
                                         }
                                         else
                                         {
@@ -107,8 +107,8 @@ int main()
             else
             {
                 rc = MATRIX_DATA_INPUT_ERROR;
-                free_matrix(matrix_a);
             }
+            free_matrix(matrix_a);
         }
         else
         {

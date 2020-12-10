@@ -117,6 +117,7 @@ int **multiply_matrices(int **matrix_a, int **matrix_b, unsigned int size)
             result_matrix[i][j] = find_mult_result(matrix_a, matrix_b, size, i, j);
             if (result_matrix[i][j] < 0)
             {
+                free_matrix(result_matrix);
                 return NULL;
             }
         }
