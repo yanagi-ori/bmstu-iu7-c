@@ -50,6 +50,10 @@ int get_item_list(struct object ***array, FILE *file, int *length)
         {
             return EMPTY_ITEM_NAME;
         }
+        if (temp_weight <= 0 || temp_volume <= 0)
+        {
+            return WRONG_DATA;
+        }
         temp_object = create_object(temp_name, temp_weight, temp_volume);
         if (temp_object)
         {
