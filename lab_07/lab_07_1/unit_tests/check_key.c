@@ -23,7 +23,6 @@ START_TEST(test_filter_mixed)
         ck_assert_int_eq(array[5], pb_dst[5]);
         ck_assert_int_eq(array[6], pb_dst[6]);
         ck_assert_int_eq(array[7], pb_dst[7]);
-        //ck_assert_int_eq(array[8], pb_dst[8]);
     }
     else
     {
@@ -61,7 +60,6 @@ START_TEST(test_filter_all_neg)
         ck_assert_int_eq(array[0], pb_dst[0]);
         ck_assert_int_eq(array[1], pb_dst[1]);
         ck_assert_int_eq(array[2], pb_dst[2]);
-        //ck_assert_int_eq(array[3], pb_dst[3]);
     }
     else
     {
