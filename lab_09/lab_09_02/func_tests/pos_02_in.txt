@@ -1,0 +1,15 @@
+one 12.1 12.1
+two 2 1
+three 1.1 1.1
+four 2 1
+five 1 1
+six 123 123
+seven 89 345
+eight 75 54
+nine 12.1 12.1
+ten 2 1
+eleven 1.1 1.1
+twelve 0.5 1
+oops 1 1
+anotherone 123 123
+fiveteen 89 345
