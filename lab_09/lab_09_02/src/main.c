@@ -25,7 +25,10 @@ int main(int argc, char *argv[])
                     if (length > 0)
                     {
                         rc = selection_sort(array, &array[length]);
-                        array_print(array, length);
+                        if (rc == 0)
+                        {
+                            array_print(array, length);
+                        }
                     }
                     else
                     {
@@ -48,8 +51,8 @@ int main(int argc, char *argv[])
                     {
                         rc = WRONG_DATA;
                     }
+                    free_array(array, length);
                 }
-                free_array(array, length);
             }
             fclose(file_stream);
         }
@@ -64,19 +67,3 @@ int main(int argc, char *argv[])
     }
     return rc;
 }
-/*
-    if (argc == 3)
-    {
-        int length = get_item_list(objects, file);
-        fclose(file);
-        if (length <= 0)
-        {
-            return WRONG_DATA;
-        }
-
-        custom_output(objects, length, argv[2]);
-    }
-
-    return 0;
-}
-*/

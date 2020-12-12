@@ -8,6 +8,9 @@
 #include "../inc/errors.h"
 #include "../inc/struct_ctrl.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 void array_print(struct object **array, int size)
 {
     for (int i = 0; i < size; i++)
@@ -43,6 +46,10 @@ int get_item_list(struct object ***array, FILE *file, int *length)
         {
             return TOO_LONG_ITEM_NAME;
         }
+        if (strlen(temp_name) == 0)
+        {
+            return EMPTY_ITEM_NAME;
+        }
         temp_object = create_object(temp_name, temp_weight, temp_volume);
         if (temp_object)
         {
@@ -59,5 +66,9 @@ int get_item_list(struct object ***array, FILE *file, int *length)
         rv = fscanf(file, "%100s%lf%lf", temp_name, &temp_weight, &temp_volume);
     }
     *length = i;
+    if (*length == 0)
+    {
+        *array = malloc(1);
+    }
     return 0;
 }

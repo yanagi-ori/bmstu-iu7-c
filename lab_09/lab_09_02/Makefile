@@ -1,6 +1,6 @@
 CFLAGS := -Wall -Werror -std=gnu99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
 OBJS := ./out/utils.o ./out/io.o ./out/struct_ctrl.o
-UTOBJS := ./out/check_matrix_creation.o
+UTOBJS := ./out/check_io.o
 CC := gcc
 LINKER := -o
 
@@ -39,7 +39,7 @@ unit_tests.exe: ./out/unit_test.o $(OBJS) $(UTOBJS)
 	mkdir -p out
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./out/check_matrix_creation.o: ./unit_tests/check_matrix_creation.c ./inc/*.h
+./out/check_io.o: ./unit_tests/check_io.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean

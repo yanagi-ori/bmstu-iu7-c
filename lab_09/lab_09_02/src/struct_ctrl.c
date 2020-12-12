@@ -24,7 +24,6 @@ struct object *create_object(char *name, double weight, double value)
             free(item);
             item = NULL;
         }
-
     }
     return item;
 }
