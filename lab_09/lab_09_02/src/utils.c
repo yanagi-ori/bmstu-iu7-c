@@ -1,6 +1,7 @@
 #include "../inc/struct.h"
 #include "../inc/utils.h"
 #include "../inc/errors.h"
+#include "../inc/struct_ctrl.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -59,19 +60,24 @@ int selection_sort(struct object **array_start, struct object **array_end)
 
 struct object **add_to_array(struct object **array, struct object *new_item, int *len)
 {
+    struct object **new_array;
     if (array == NULL)
     {
-        array = malloc(sizeof(struct object *));
+        new_array = malloc(sizeof(struct object *));
     }
     else
     {
-        array = realloc(array, sizeof(struct object *) * ((*len) + 2));
+        new_array = realloc(array, sizeof(struct object *) * ((*len) + 2));
     }
-    if (array == NULL)
+    if (new_array == NULL)
     {
+        if (array != NULL)
+        {
+            free_array(array, *len);
+        }
         return NULL;
     }
-    array[*len] = new_item;
+    new_array[*len] = new_item;
     (*len)++;
-    return array;
+    return new_array;
 }

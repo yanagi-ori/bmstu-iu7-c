@@ -33,8 +33,9 @@ void custom_output(struct object **array, int size, char *substring)
 
 int get_item_list(struct object ***array, FILE *file, int *length)
 {
+    *length = 0;
     int i = 0;
-    char temp_name[100];
+    char temp_name[256];
     double temp_weight = -1, temp_volume = -1;
     struct object *temp_object = NULL;
     int rv;
@@ -44,24 +45,38 @@ int get_item_list(struct object ***array, FILE *file, int *length)
     {
         if (rv != 3)
         {
+            if (*array != NULL)
+            {
+                free_array(*array, i);
+            }
             return TOO_LONG_ITEM_NAME;
         }
         if (strlen(temp_name) == 0)
         {
+            if (*array != NULL)
+            {
+                free_array(*array, i);
+            }
             return EMPTY_ITEM_NAME;
         }
         if (temp_weight <= 0 || temp_volume <= 0)
         {
+            if (*array != NULL)
+            {
+                free_array(*array, i);
+            }
             return WRONG_DATA;
         }
         temp_object = create_object(temp_name, temp_weight, temp_volume);
         if (temp_object)
         {
-            *array = add_to_array(*array, temp_object, &i);
-            if (array == NULL)
+            struct object **new_array = add_to_array(*array, temp_object, &i);
+            if (new_array == NULL)
             {
+                free_array(*array, i);
                 return MEMORY_ALLOCATION_ERROR;
             }
+            *array = new_array;
         }
         else
         {
@@ -72,7 +87,11 @@ int get_item_list(struct object ***array, FILE *file, int *length)
     *length = i;
     if (*length == 0)
     {
-        *array = malloc(1);
+        if (*array != NULL)
+        {
+            free_array(*array, 1);
+        }
+        return NO_ELEMENTS;
     }
     return 0;
 }
