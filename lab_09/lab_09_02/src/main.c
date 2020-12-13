@@ -15,14 +15,13 @@ int main(int argc, char *argv[])
         if (file_stream != NULL)
         {
             struct object **array = NULL;
-
-            if (argc == 2)
+            int length;
+            rc = get_item_list(&array, file_stream, &length);
+            if (rc == 0)
             {
-                int length;
-                rc = get_item_list(&array, file_stream, &length);
-                if (rc == 0)
+                if (length > 0)
                 {
-                    if (length > 0)
+                    if (argc == 2)
                     {
                         rc = selection_sort(array, &array[length]);
                         if (rc == 0)
@@ -30,31 +29,18 @@ int main(int argc, char *argv[])
                             array_print(array, length);
                         }
                     }
-                    else
-                    {
-                        rc = WRONG_DATA;
-                    }
-                    free_array(array, length);
-                }
-            }
-            if (argc == 3)
-            {
-                int length;
-                rc = get_item_list(&array, file_stream, &length);
-                if (rc == 0)
-                {
-                    if (length > 0)
+                    if (argc == 3)
                     {
                         custom_output(array, length, argv[2]);
                     }
-                    else
-                    {
-                        rc = WRONG_DATA;
-                    }
-                    free_array(array, length);
                 }
+                else
+                {
+                    rc = WRONG_DATA;
+                }
+                fclose(file_stream);
+                free_array(array, length);
             }
-            fclose(file_stream);
         }
         else
         {
