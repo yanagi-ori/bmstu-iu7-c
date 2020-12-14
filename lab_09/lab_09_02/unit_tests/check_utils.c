@@ -122,8 +122,8 @@ START_TEST(test_sort_array)
     array = add_to_array(array, test1, &len);
     struct object *test2 = create_object("test", 3, 1);
     array = add_to_array(array, test2, &len);
-    ck_assert(array[0] == test2);
-    ck_assert(array[1] == test1);
+    ck_assert(array[0] == test1);
+    ck_assert(array[1] == test2);
     free_array(array, len);
 }
 END_TEST
