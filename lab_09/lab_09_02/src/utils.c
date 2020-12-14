@@ -16,13 +16,14 @@ int starts_with(const char *a, const char *b)
     return (strncmp(a, b, strlen(b)) == 0);
 }
 
-double density(const double weight, const double value)
+int density(const double weight, const double value, double *density)
 {
-    if (fabs(value) < EPS)
+    if (value <= 0 || weight <= 0)
     {
-        return -1;
+        return WRONG_DATA;
     }
-    return ((double) weight) / ((double) value);
+    *density = ((double) weight) / ((double) value);
+    return 0;
 }
 
 void swap(struct object *a, struct object *b)
@@ -34,9 +35,15 @@ void swap(struct object *a, struct object *b)
 
 int selection_sort(struct object **array_start, struct object **array_end)
 {
+    int rc = 0;
     for (struct object **i = array_start; i < array_end - 1; i++)
     {
-        double minz = density((*i)->weight, (*i)->volume);
+        double minz = 0;
+        rc = density((*i)->weight, (*i)->volume, &minz);
+        if (rc != 0)
+        {
+            return WRONG_DATA;
+        }
         if (fabs(minz + 1) < EPS)
         {
             return WRONG_DATA;
@@ -44,9 +51,19 @@ int selection_sort(struct object **array_start, struct object **array_end)
         struct object **ind = i;
         for (struct object **j = i + 1; j < array_end; j++)
         {
-            if (density((*j)->weight, (*j)->volume) < minz)
+            double temp;
+            rc = density((*j)->weight, (*j)->volume, &temp);
+            if (rc != 0)
             {
-                minz = density((*j)->weight, (*j)->volume), ind = j;
+                return WRONG_DATA;
+            }
+            if (temp < minz)
+            {
+                rc = density((*j)->weight, (*j)->volume, &minz), ind = j;
+                if (rc != 0)
+                {
+                    return WRONG_DATA;
+                }
                 if (fabs(minz + 1) < EPS)
                 {
                     return WRONG_DATA;
@@ -55,7 +72,7 @@ int selection_sort(struct object **array_start, struct object **array_end)
         }
         swap(*i, *ind);
     }
-    return 0;
+    return rc;
 }
 
 struct object **add_to_array(struct object **array, struct object *new_item, int *len)

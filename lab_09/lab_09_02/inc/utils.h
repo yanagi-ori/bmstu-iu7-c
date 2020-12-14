@@ -7,4 +7,6 @@ int starts_with(const char *a, const char *b);
 
 struct object **add_to_array(struct object **array, struct object *new_item, int *len);
 
+int density(const double weight, const double value, double *density);
+
 #endif

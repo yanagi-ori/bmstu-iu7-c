@@ -9,6 +9,11 @@
 
 struct object *create_object(char *name, double weight, double value)
 {
+    if (name == NULL || weight <= 0 || value <= 0)
+    {
+        return NULL;
+    }
+
     struct object *item = malloc(sizeof(struct object));
 
     if (item)
