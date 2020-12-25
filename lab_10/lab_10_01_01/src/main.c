@@ -12,7 +12,7 @@
 int main(int argc, char **argv)
 {
     int rc = 0;
-    if (argc == 3)
+    if (argc >= 3)
     {
         FILE *file = fopen(argv[1], "r");
         if (file != NULL)
@@ -28,10 +28,25 @@ int main(int argc, char **argv)
                     rc = load_file(file, &list_head, memory_manager);
                     if (rc == 0)
                     {
-                        if (strcmp(argv[2], "pop_front") == 0)
+                        if (strcmp(argv[2], "pop_front") == 0 && argc == 3)
                         {
                             student_t *student = (student_t *) pop_front(&list_head.head);
-                            printf("%s\n", student->surname);
+                            printf("%s %s %s %s\n", student->surname, student->name, student->year, student->group);
+                        }
+                        else if (strcmp(argv[2], "find") == 0)
+                        {
+                            node_t *node = find(list_head.head, argv[3], comparator);
+                            if (node == NULL)
+                            {
+                                rc = FIND_ERROR;
+                            }
+                            else
+                            {
+                                student_t *student = (student_t *) (node->data);
+                                printf("%s %s %s %s\n",
+                                       student->surname, student->name,
+                                       student->year, student->group);
+                            }
                         }
                     }
 

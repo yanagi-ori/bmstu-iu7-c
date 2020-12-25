@@ -11,8 +11,8 @@ typedef struct student
 {
     char *surname;
     char *name;
-    short int group;
-    short int year;
+    char *group;
+    char *year;
 } student_t;
 
 typedef struct node node_t;

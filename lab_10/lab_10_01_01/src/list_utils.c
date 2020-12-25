@@ -5,6 +5,7 @@
 #include "../inc/struct.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../inc/list_utils.h"
 #include "../inc/errors.h"
 
@@ -48,9 +49,37 @@ short append_node(node_t *node)
     return 0;
 }
 
+int comparator(const void *a, const void *b)
+{
+    student_t *student = ((node_t *) a)->data;
+    if (strcmp(student->surname, (char *) b) == 0 || strcmp(student->name, (char *) b) == 0)
+    {
+        return 0;
+    }
+    if (strcmp(student->year, (char *) b) == 0 || strcmp(student->group, (char *) b) == 0)
+    {
+        return 0;
+    }
+    return -1;
+}
+
 void *pop_front(node_t **head)
 {
     void *data = (*head)->data;
     *head = (*head)->next;
     return data;
+}
+
+node_t *find(node_t *head, const void *data, int (*comparator)(const void *, const void *))
+{
+    node_t *temp_node = head;
+    while (temp_node->next != 0)
+    {
+        if (comparator(temp_node, data) == 0)
+        {
+            return temp_node;
+        }
+        temp_node = temp_node->next;
+    }
+    return NULL;
 }

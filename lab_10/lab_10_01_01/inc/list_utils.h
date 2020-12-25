@@ -11,4 +11,8 @@ short create_liked_list(linked_list_t *list);
 
 void *pop_front(node_t **head);
 
+node_t *find(node_t *head, const void *data, int (*comparator)(const void *, const void *));
+
+int comparator(const void *a, const void *b);
+
 #endif //LAB_10_01_01_LIST_UTILS_H

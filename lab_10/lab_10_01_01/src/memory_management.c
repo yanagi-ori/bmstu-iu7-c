@@ -28,6 +28,8 @@ void free_memory_manager(memory_manager_t *memory_manager)
     {
         free(((student_t *) memory_manager->nodes_heap[i]->data)->surname);
         free(((student_t *) memory_manager->nodes_heap[i]->data)->name);
+        free(((student_t *) memory_manager->nodes_heap[i]->data)->year);
+        free(((student_t *) memory_manager->nodes_heap[i]->data)->group);
         free(((student_t *) memory_manager->nodes_heap[i]->data));
         free(memory_manager->nodes_heap[i]);
     }

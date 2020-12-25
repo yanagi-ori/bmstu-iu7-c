@@ -14,8 +14,8 @@
 
 short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manager)
 {
-    char temp_surname[41], temp_name[41];
-    int temp_year, temp_group;
+    char temp_surname[41], temp_name[41], temp_year[5], temp_group[41];
+
     int rv = 4;
     int rc;
 
@@ -32,7 +32,7 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
         {
             return MEMORY_ALLOCATION_ERROR;
         }
-        rv = fscanf(file, "%40s%40s%d%d", temp_surname, temp_name, &temp_year, &temp_group);
+        rv = fscanf(file, "%40s%40s%4s%40s", temp_surname, temp_name, temp_year, temp_group);
         if (rv == EOF)
         {
             break;
@@ -43,9 +43,8 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
         }
         ((student_t *) node->data)->surname = strdup(temp_surname);
         ((student_t *) node->data)->name = strdup(temp_name);
-        printf("%s %s\n", ((student_t *) node->data)->surname, ((student_t *) node->data)->name);
-        ((student_t *) node->data)->year = (short) temp_year;
-        ((student_t *) node->data)->group = (short) temp_group;
+        ((student_t *) node->data)->year = strdup(temp_year);
+        ((student_t *) node->data)->group = strdup(temp_group);
 
         rc = append_node(node);
         if (rc == MEMORY_ALLOCATION_ERROR)
