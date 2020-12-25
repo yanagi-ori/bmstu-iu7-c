@@ -48,9 +48,41 @@ int main(int argc, char **argv)
                                        student->year, student->group);
                             }
                         }
+                        else if (strcmp(argv[2], "append") == 0 && argc == 4)
+                        {
+                            FILE *new_file = fopen(argv[3], "r");
+                            if (new_file != NULL)
+                            {
+                                memory_manager_t *new_mm = malloc(sizeof(memory_manager_t));
+                                rc = create_memory_manager(new_mm, 125);
+                                if (rc == 0)
+                                {
+                                    linked_list_t new_list;
+                                    rc = create_liked_list(&new_list);
+                                    if (rc == 0)
+                                    {
+                                        rc = load_file(new_file, &new_list, new_mm);
+                                        if (rc == 0)
+                                        {
+                                            append(&(list_head.head), &(new_list.head));
+                                            printf("Output of list a: \n");
+                                            print_list(list_head.head);
+                                            printf("\nOutput of list b: \n");
+                                            print_list(new_list.head);
+                                        }
+                                    }
+                                    free_memory_manager(new_mm);
+                                    free(new_mm->nodes_heap);
+                                    free(new_mm);
+                                }
+
+                            }
+                            else
+                            {
+                                rc = IO_ERROR;
+                            }
+                        }
                     }
-
-
                 }
                 free_memory_manager(memory_manager);
                 free(memory_manager->nodes_heap);

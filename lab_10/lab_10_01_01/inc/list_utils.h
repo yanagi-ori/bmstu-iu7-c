@@ -15,4 +15,8 @@ node_t *find(node_t *head, const void *data, int (*comparator)(const void *, con
 
 int comparator(const void *a, const void *b);
 
+void append(node_t **head_a, node_t **head_b);
+
+void print_list(node_t *head);
+
 #endif //LAB_10_01_01_LIST_UTILS_H

@@ -45,6 +45,7 @@ short append_node(node_t *node)
         free(new_element);
         return MEMORY_ALLOCATION_ERROR;
     }
+    new_element->next = NULL;
     node->next = new_element;
     return 0;
 }
@@ -82,4 +83,30 @@ node_t *find(node_t *head, const void *data, int (*comparator)(const void *, con
         temp_node = temp_node->next;
     }
     return NULL;
+}
+
+void append(node_t **head_a, node_t **head_b)
+{
+    node_t *temp_node = *head_a;
+    while (temp_node->next->next != NULL)
+    {
+        temp_node = temp_node->next;
+    }
+    temp_node->next = *head_b;
+    *head_b = NULL;
+}
+
+void print_list(node_t *head)
+{
+    node_t *temp = head;
+    if (temp == NULL)
+    {
+        printf("The list is empty\n");
+        return;
+    }
+    while (temp->next != NULL)
+    {
+        printf("%s\n", ((student_t *) temp->data)->surname);
+        temp = temp->next;
+    }
 }
