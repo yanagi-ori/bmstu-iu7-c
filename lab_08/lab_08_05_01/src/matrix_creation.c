@@ -6,7 +6,7 @@
 
 #include "../inc/errors.h"
 
-int **create_matrix(unsigned int rows, unsigned int cols)
+int **create_matrix(int rows, int cols)
 {
     int **pointers, *data;
 

@@ -10,7 +10,7 @@
 #include "../inc/errors.h"
 
 
-int squaring(int **matrix, unsigned int rows, unsigned int columns, unsigned int target)
+int squaring(int **matrix, int rows, int columns, int target)
 {
     int rc;
 
@@ -97,7 +97,7 @@ int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int co
     return new_matrix;
 }
 
-int **multiply_matrices(int **matrix_a, int **matrix_b, unsigned int size)
+int **multiply_different_matrices(int **matrix_a, int **matrix_b, unsigned int size)
 {
     if (size == 0)
     {
@@ -124,4 +124,32 @@ int **multiply_matrices(int **matrix_a, int **matrix_b, unsigned int size)
     }
 
     return result_matrix;
+}
+
+int matrix_power(int ***matrix_a, int ***matrix_b, int size)
+{
+    if (*matrix_a == NULL)
+    {
+        *matrix_a = create_matrix(size, size);
+        if (matrix_a == NULL)
+        {
+            return MATRIX_MEMORY_ALLOCATION_ERROR;
+        }
+        int rc = copy_old_to_new(*matrix_b, *matrix_a, size, size, size);
+        if (rc != 0)
+        {
+            return rc;
+        }
+        return 0;
+    }
+
+    int **temp_matrix;
+    temp_matrix = multiply_different_matrices(*matrix_a, *matrix_b, size);
+    if (temp_matrix == NULL)
+    {
+        return MATRIX_MEMORY_ALLOCATION_ERROR;
+    }
+    free_matrix(*matrix_a);
+    *matrix_a = temp_matrix;
+    return 0;
 }

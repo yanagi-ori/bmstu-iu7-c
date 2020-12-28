@@ -4,6 +4,7 @@
 #include "../inc/utils.h"
 #include "../inc/matrix_operations.h"
 #include "../inc/io.h"
+#include "../inc/matrix_utils.h"
 
 int main()
 {
@@ -62,17 +63,66 @@ int main()
                                         int **matrix_b_new = matrix_enlargement(matrix_b, s, s, z);
                                         if (matrix_b_new != NULL)
                                         {
-                                            // multiplication
-                                            int **result_matrix = multiply_matrices(matrix_a_new, matrix_b_new, z);
-                                            if (result_matrix != NULL)
+                                            int r, g;
+                                            printf("Enter ro and gamma numbers: ");
+                                            rc = scanf("%d%d", &r, &g);
+                                            if (rc == 2 && (r > 0 || g > 0))
                                             {
-                                                output_matrix(result_matrix, z, z);
-                                                free_matrix(result_matrix);
+                                                rc = 0;
+                                                int **mult_a = NULL;
+                                                for (int i = 0; i < r; i++)
+                                                {
+                                                    rc = matrix_power(&mult_a, &matrix_a_new, z);
+                                                    if (rc != 0)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                if (rc == 0)
+                                                {
+                                                    int **mult_b = NULL;
+                                                    for (int i = 0; i < g; i++)
+                                                    {
+                                                        rc = matrix_power(&mult_b, &matrix_b_new, z);
+                                                        if (rc != 0)
+                                                        {
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (rc == 0)
+                                                    {
+                                                        int **result_matrix = multiply_different_matrices(mult_a,
+                                                                                                          mult_b,
+                                                                                                          z);
+                                                        if (result_matrix != NULL)
+                                                        {
+
+                                                            output_matrix(result_matrix, z, z);
+                                                            free_matrix(result_matrix);
+                                                        }
+                                                        else
+                                                        {
+                                                            rc = MATRIX_MULTIPLICATION_ERROR;
+                                                        }
+                                                    }
+
+
+                                                    if (mult_b != NULL)
+                                                    {
+                                                        free_matrix(mult_b);
+                                                    }
+                                                }
+                                                if (mult_a != NULL)
+                                                {
+                                                    free_matrix(mult_a);
+                                                }
                                             }
                                             else
                                             {
-                                                rc = MATRIX_MULTIPLICATION_ERROR;
+                                                rc = WRONG_DATA;
                                             }
+
                                         }
                                         else
                                         {
@@ -92,12 +142,12 @@ int main()
                         {
                             rc = MATRIX_DATA_INPUT_ERROR;
                         }
+                        free_matrix(matrix_b);
                     }
                     else
                     {
                         rc = MATRIX_MEMORY_ALLOCATION_ERROR;
                     }
-                    free_matrix(matrix_b);
                 }
                 else
                 {
