@@ -5,6 +5,7 @@
 #include <check.h>
 #include "../inc/matrix_creation.h"
 #include "../inc/matrix_operations.h"
+#include "../inc/matrix_utils.h"
 
 START_TEST(test_squaring_col_last)
 {
@@ -321,6 +322,128 @@ Suite *enlargement_suite(void)
     tcase_add_test(tc_pos, enlargement_add_sveral_rows_cols);
     tcase_add_test(tc_pos, enlargement_no_add);
 
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+
+START_TEST(mult_matrices_basic)
+{
+    int **matrix_a = create_matrix(3, 3);
+    int **matrix_b = create_matrix(3, 3);
+    int array_a[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int array_b[9] = {3, 3, 3, 8, 9, 2, 1, 2, 2};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_a[i][j] = array_a[k];
+            matrix_b[i][j] = array_b[k];
+            k++;
+        }
+    }
+
+    int rc = mult_matrices(matrix_a, matrix_b, 3);
+    if (rc != 0)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        ck_abort();
+    }
+
+    if (matrix_a[0][0] != 25 || matrix_a[1][2] != 11 || matrix_a[2][1] != 42 || matrix_a[2][2] != 21)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        ck_abort();
+    }
+
+    free_matrix(matrix_a);
+    free_matrix(matrix_b);
+}
+END_TEST
+
+
+START_TEST(mult_matrices_identity)
+{
+    int **matrix_a = create_matrix(3, 3);
+    int **matrix_b = create_matrix(3, 3);
+    int array_a[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_a[i][j] = array_a[k];
+            k++;
+        }
+    }
+    identity_matrix(matrix_b, 3);
+
+    int rc = mult_matrices(matrix_a, matrix_b, 3);
+    if (rc != 0)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        ck_abort();
+    }
+
+    if (matrix_a[0][0] != 0 || matrix_a[1][2] != 2 || matrix_a[2][1] != 3 || matrix_a[2][2] != 3)
+    {
+        free_matrix(matrix_a);
+        free_matrix(matrix_b);
+        ck_abort();
+    }
+
+    free_matrix(matrix_a);
+    free_matrix(matrix_b);
+}
+END_TEST
+
+START_TEST(mult_matrices_out_of_range)
+{
+    int **matrix_a = create_matrix(3, 3);
+    int **matrix_b = create_matrix(3, 3);
+    int array_a[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_a[i][j] = array_a[k];
+            k++;
+        }
+    }
+    identity_matrix(matrix_b, 3);
+
+    int rc = mult_matrices(matrix_a, matrix_b, -1);
+    free_matrix(matrix_a);
+    free_matrix(matrix_b);
+    if (rc == 0)
+    {
+        ck_abort();
+    }
+}
+END_TEST
+
+Suite *mult_matrices_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("mult_matrices_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, mult_matrices_out_of_range);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, mult_matrices_basic);
+    tcase_add_test(tc_pos, mult_matrices_identity);
     suite_add_tcase(s, tc_pos);
 
     return s;

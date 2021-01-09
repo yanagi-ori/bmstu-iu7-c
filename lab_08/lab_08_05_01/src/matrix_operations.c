@@ -89,6 +89,10 @@ int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int co
 
 int mult_matrices(int **matrix_base, int **matrix, int size)
 {
+    if (size <= 0)
+    {
+        return MATRIX_OUT_OF_RANGE;
+    }
     int **temp_matrix = create_matrix(size, size);
     if (temp_matrix == NULL)
     {
