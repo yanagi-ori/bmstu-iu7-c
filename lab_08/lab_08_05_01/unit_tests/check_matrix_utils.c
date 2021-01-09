@@ -306,6 +306,8 @@ START_TEST(cotn_basic)
             }
         }
     }
+    free_matrix(source_matrix);
+    free_matrix(new_matrix);
 }
 END_TEST
 
