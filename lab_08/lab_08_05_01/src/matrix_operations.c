@@ -12,8 +12,6 @@
 
 int squaring(int **matrix, int rows, int columns, int target)
 {
-    int rc;
-
     if (rows == 0 || columns == 0 || target == 0)
     {
         return MATRIX_DATA_INPUT_ERROR;
@@ -25,19 +23,11 @@ int squaring(int **matrix, int rows, int columns, int target)
     }
     while (rows > target)
     {
-        rc = delete_row(matrix, &rows, columns);
-        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
-        {
-            return MATRIX_MEMORY_ALLOCATION_ERROR;
-        }
+        delete_row(matrix, &rows, columns);
     }
     while (columns > target)
     {
-        rc = delete_column(matrix, rows, &columns);
-        if (rc == MATRIX_MEMORY_ALLOCATION_ERROR)
-        {
-            return MATRIX_MEMORY_ALLOCATION_ERROR;
-        }
+        delete_column(matrix, rows, &columns);
     }
 
     return 0;

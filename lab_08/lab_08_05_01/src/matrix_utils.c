@@ -27,7 +27,7 @@ void coord_of_min_in_matrix(int **matrix, unsigned int rows, unsigned int column
     }
 }
 
-int delete_row(int **matrix, int *rows, int columns)
+void delete_row(int **matrix, int *rows, int columns)
 {
     unsigned int x, y;
     coord_of_min_in_matrix(matrix, *rows, columns, &x, &y);
@@ -48,10 +48,9 @@ int delete_row(int **matrix, int *rows, int columns)
         cur_x++;
     }
     (*rows)--;
-    return 0;
 }
 
-int delete_column(int **matrix, int rows, int *columns)
+void delete_column(int **matrix, int rows, int *columns)
 {
     unsigned int x, y;
     coord_of_min_in_matrix(matrix, rows, *columns, &x, &y);
@@ -72,7 +71,6 @@ int delete_column(int **matrix, int rows, int *columns)
     }
 
     (*columns)--;
-    return 0;
 }
 
 int copy_old_to_new(int **source_matrix, int **new_matrix, unsigned int rows, unsigned int cols, unsigned int target)
