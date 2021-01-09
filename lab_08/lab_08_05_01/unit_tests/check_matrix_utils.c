@@ -604,3 +604,108 @@ Suite *find_max_in_row_suite(void)
     return s;
 }
 
+START_TEST(add_new_col_basic)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 3, 3, 3, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    int result_1 = find_max_in_row(matrix, 0, 3);
+    int result_2 = find_max_in_row(matrix, 1, 3);
+    int result_3 = find_max_in_row(matrix, 2, 3);
+    int result_4 = find_max_in_row(matrix, 3, 3);
+
+    unsigned int cols = 3;
+    int rc = add_new_column(matrix, 4, &cols, 4);
+    if (rc != 0){
+        free_matrix(matrix);
+        ck_abort();
+    }
+    if (result_1 != matrix[0][3] || result_2 != matrix[1][3] || result_3 != matrix[2][3] || result_4 != matrix[3][3])
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(add_new_col_equal)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 3, 3, 3, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    unsigned int cols = 3;
+    int rc = add_new_column(matrix, 4, &cols, 3);
+    if (rc != 0)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+    if (cols != 3)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(add_new_col_less)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 3, 3, 3, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    unsigned int cols = 3;
+    int rc = add_new_column(matrix, 4, &cols, 2);
+    if (rc == 0)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+Suite *add_new_col_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("add_new_col_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, add_new_col_less);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, add_new_col_basic);
+    tcase_add_test(tc_pos, add_new_col_equal);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
