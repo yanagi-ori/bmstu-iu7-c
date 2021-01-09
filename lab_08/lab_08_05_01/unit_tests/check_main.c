@@ -26,6 +26,8 @@ Suite *find_geom_mean_of_col_suite(void);
 
 Suite *add_new_row_suite(void);
 
+Suite *find_max_in_row_suite(void);
+
 int main(void)
 {
     int no_failed = 0;
@@ -68,6 +70,10 @@ int main(void)
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
     runner = srunner_create(add_new_row_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(find_max_in_row_suite());
     srunner_run_all(runner, CK_VERBOSE);
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);

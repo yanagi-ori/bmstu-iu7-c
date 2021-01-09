@@ -541,3 +541,62 @@ Suite *add_new_row_suite(void)
 
     return s;
 }
+
+//
+
+START_TEST(fmir_basic)
+{
+    int **matrix = create_matrix(4, 3);
+    int array[12] = {0, 2, 9, 1, 2, 2, 3, 3, 3, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    int max = find_max_in_row(matrix, 0, 3);
+    if (max != 9)
+    {
+        ck_abort();
+    }
+}
+END_TEST
+
+START_TEST(fmir_several)
+{
+    int **matrix = create_matrix(4, 3);
+    int array[12] = {0, 9, 9, 1, 2, 2, 3, 3, 3, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    int max = find_max_in_row(matrix, 0, 3);
+    if (max != 9)
+    {
+        ck_abort();
+    }
+}
+END_TEST
+
+Suite *find_max_in_row_suite(void)
+{
+    Suite *s;
+    TCase *tc_pos;
+
+    s = suite_create("find_max_in_row_suite");
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, fmir_basic);
+    tcase_add_test(tc_pos, fmir_several);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+

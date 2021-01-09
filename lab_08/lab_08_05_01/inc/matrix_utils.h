@@ -23,4 +23,6 @@ void coord_of_min_in_matrix(int **matrix, unsigned int rows, unsigned int column
 
 int find_geom_mean_of_col(int **matrix, unsigned int rows, unsigned int column);
 
+int find_max_in_row(int **matrix, unsigned int row, unsigned columns);
+
 #endif //LAB_08_05_01_MATRIX_UTILS_H
