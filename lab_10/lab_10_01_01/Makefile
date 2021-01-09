@@ -32,6 +32,14 @@ app.exe: ./out/main.o $(OBJS)
 ./out/mm.o: ./src/memory_management.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+./out/utils.o: ./src/utils.c ./inc/*.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+./out/unit_test.o: ./unit_tests/check_main.c ./inc/*.h
+	mkdir -p out
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
 .PHONY: clean
 
 clean:
