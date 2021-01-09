@@ -559,8 +559,10 @@ START_TEST(fmir_basic)
     int max = find_max_in_row(matrix, 0, 3);
     if (max != 9)
     {
+        free_matrix(matrix);
         ck_abort();
     }
+    free_matrix(matrix);
 }
 END_TEST
 
@@ -579,8 +581,10 @@ START_TEST(fmir_several)
     int max = find_max_in_row(matrix, 0, 3);
     if (max != 9)
     {
+        free_matrix(matrix);
         ck_abort();
     }
+    free_matrix(matrix);
 }
 END_TEST
 
