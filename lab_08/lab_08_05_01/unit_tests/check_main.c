@@ -4,6 +4,7 @@
 
 
 #include <check.h>
+#include <stdio.h>
 
 
 Suite *matrix_creation_suite(void);
@@ -90,5 +91,6 @@ int main(void)
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
 
+    printf("%d errors\n", no_failed);
     return (no_failed == 0) ? 0 : 1;
 }

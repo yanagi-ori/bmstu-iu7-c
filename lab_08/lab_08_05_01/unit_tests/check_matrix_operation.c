@@ -151,6 +151,158 @@ Suite *squaring_suite(void)
 
 // enlargement
 
+START_TEST(enlargement_add_one_col_row)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_enlargement(matrix, 3, 3, 4);
+    if (new_matrix == NULL)
+    {
+        ck_abort();
+        free_matrix(matrix);
+    }
+
+    free_matrix(matrix);
+
+    if (new_matrix[2][0] != 0 || new_matrix[2][1] != 2 || new_matrix[1][2] != 2)
+    {
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+
+    free_matrix(new_matrix);
+}
+END_TEST
+
+START_TEST(enlargement_add_sveral_rows_cols)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_enlargement(matrix, 3, 3, 5);
+    if (new_matrix == NULL)
+    {
+        ck_abort();
+        free_matrix(matrix);
+    }
+
+    free_matrix(matrix);
+
+    if (new_matrix[2][0] != 0 || new_matrix[2][1] != 2 || new_matrix[1][2] != 2)
+    {
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+    if (new_matrix[3][2] != 5 || new_matrix[2][3] != 9 || new_matrix[3][3] != 5 || new_matrix[1][1] != 2){
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+
+    free_matrix(new_matrix);
+}
+END_TEST
+
+
+START_TEST(enlargement_no_add)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_enlargement(matrix, 3, 3, 3);
+    if (new_matrix == NULL)
+    {
+        ck_abort();
+        free_matrix(matrix);
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (matrix[i][j] != new_matrix[i][j])
+            {
+                free_matrix(matrix);
+                free_matrix(new_matrix);
+                ck_abort();
+            }
+        }
+    }
+    free_matrix(matrix);
+    free_matrix(new_matrix);
+}
+END_TEST
+
+START_TEST(enlargement_zero)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_enlargement(matrix, 0, 3, 4);
+    if (new_matrix != NULL)
+    {
+        free_matrix(matrix);
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(enlargement_target_less)
+{
+    int **matrix = create_matrix(4, 4);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9, 8, 9, 2};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_enlargement(matrix, 3, 3, 2);
+    if (new_matrix != NULL)
+    {
+        free_matrix(matrix);
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
 
 Suite *enlargement_suite(void)
 {
@@ -160,14 +312,14 @@ Suite *enlargement_suite(void)
 
     s = suite_create("enlargement_suite");
     tc_neg = tcase_create("negatives");
-    tcase_add_test(tc_neg, test_squaring_col_last);
+    tcase_add_test(tc_neg, enlargement_zero);
+    tcase_add_test(tc_neg, enlargement_target_less);
     suite_add_tcase(s, tc_neg);
 
     tc_pos = tcase_create("positives");
-    tcase_add_test(tc_pos, test_squaring_col_last);
-    tcase_add_test(tc_pos, test_squaring_col_first);
-    tcase_add_test(tc_pos, test_squaring_row_first);
-    tcase_add_test(tc_pos, test_squaring_row_several);
+    tcase_add_test(tc_pos, enlargement_add_one_col_row);
+    tcase_add_test(tc_pos, enlargement_add_sveral_rows_cols);
+    tcase_add_test(tc_pos, enlargement_no_add);
 
     suite_add_tcase(s, tc_pos);
 
