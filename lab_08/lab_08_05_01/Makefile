@@ -1,9 +1,9 @@
 CFILES := ./../src/main.c ./../src/io.c ./../src/matrix_creation.c \
 ./../src/matrix_operation.c ./../src/matrix_utils.c ./../src/utils.c
 
-CFLAGS := -Wall -Werror -std=c99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
+CFLAGS := -Wall -Werror -std=c99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic
 OBJS := ./out/matrix_creation.o ./out/io.o ./out/matrix_utils.o ./out/matrix_operation.o ./out/utils.o
-UTOBJS := ./out/check_matrix_creation.o ./out/check_matrix_operation.o
+UTOBJS := ./out/check_matrix_creation.o ./out/check_matrix_operation.o ./out/check_matrix_utils.o
 CC := gcc
 LINKER := -o
 
@@ -52,6 +52,9 @@ unit_tests.exe: ./out/unit_test.o $(OBJS) $(UTOBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ./out/check_matrix_operation.o: ./unit_tests/check_matrix_operation.c ./inc/*.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+./out/check_matrix_utils.o: ./unit_tests/check_matrix_utils.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean

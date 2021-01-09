@@ -10,6 +10,13 @@ Suite *matrix_creation_suite(void);
 
 Suite *squaring_suite(void);
 
+Suite *enlargement_suite(void);
+
+Suite *imc_suite(void);
+
+Suite *cmm_suite(void);
+
+Suite *delete_row_suite(void);
 
 int main(void)
 {
@@ -21,6 +28,22 @@ int main(void)
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
     runner = srunner_create(squaring_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(enlargement_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(imc_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(cmm_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(delete_row_suite());
     srunner_run_all(runner, CK_VERBOSE);
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);

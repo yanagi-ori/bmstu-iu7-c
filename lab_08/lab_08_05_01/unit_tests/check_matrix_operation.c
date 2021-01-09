@@ -34,7 +34,6 @@ START_TEST(test_squaring_col_last)
         ck_abort();
     }
 }
-
 END_TEST
 
 START_TEST(test_squaring_col_first)
@@ -65,7 +64,6 @@ START_TEST(test_squaring_col_first)
         ck_abort();
     }
 }
-
 END_TEST
 
 START_TEST(test_squaring_row_first)
@@ -96,7 +94,6 @@ START_TEST(test_squaring_row_first)
         ck_abort();
     }
 }
-
 END_TEST
 
 START_TEST(test_squaring_row_several)
@@ -128,7 +125,6 @@ START_TEST(test_squaring_row_several)
         ck_abort();
     }
 }
-
 END_TEST
 
 Suite *squaring_suite(void)
@@ -138,6 +134,31 @@ Suite *squaring_suite(void)
     TCase *tc_pos;
 
     s = suite_create("squaring_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, test_squaring_col_last);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, test_squaring_col_last);
+    tcase_add_test(tc_pos, test_squaring_col_first);
+    tcase_add_test(tc_pos, test_squaring_row_first);
+    tcase_add_test(tc_pos, test_squaring_row_several);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+
+// enlargement
+
+
+Suite *enlargement_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("enlargement_suite");
     tc_neg = tcase_create("negatives");
     tcase_add_test(tc_neg, test_squaring_col_last);
     suite_add_tcase(s, tc_neg);
