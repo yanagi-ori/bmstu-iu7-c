@@ -73,10 +73,14 @@ void *pop_front(node_t **head)
 
 node_t *find(node_t *head, const void *data, int (*comparator)(const void *, const void *))
 {
-    node_t *temp_node = head;
-    while (temp_node->next != 0)
+    if (data == NULL || head == NULL)
     {
-        if (comparator(temp_node, data) == 0)
+        return NULL;
+    }
+    node_t *temp_node = head;
+    while (temp_node != NULL)
+    {
+        if (comparator(temp_node->data, data) == 0)
         {
             return temp_node;
         }
