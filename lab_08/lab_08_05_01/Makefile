@@ -3,7 +3,9 @@ CFILES := ./../src/main.c ./../src/io.c ./../src/matrix_creation.c \
 
 CFLAGS := -Wall -Werror -std=c99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
 OBJS := ./out/matrix_creation.o ./out/io.o ./out/matrix_utils.o ./out/matrix_operation.o ./out/utils.o
+UTOBJS := ./out/check_matrix_creation.o ./out/check_matrix_operation.o
 CC := gcc
+LINKER := -o
 
 ifeq ($(mode), debug)
 	CFLAGS += -ggdb3
@@ -13,11 +15,15 @@ ifeq ($(mode), release)
 	CFLAGS += -DNDEBUG -g0 -O2
 endif
 
-app.exe: ./out/main.o $(OBJS)
-	$(CC) $^ -lcheck -lpthread -lrt -lsubunit -lm -o $@
+ifeq ($(os), linux)
+	LINKER := -lpthread -lrt -lsubunit -lm -o
+endif
 
-unit_tests.exe: ./out/unit_test.o $(OBJS)
-	$(CC) $^ -lcheck -o $@
+app.exe: ./out/main.o $(OBJS)
+	$(CC) $^ $(LINKER) $@
+
+unit_tests.exe: ./out/unit_test.o $(OBJS) $(UTOBJS)
+	$(CC) $^ -lcheck $(LINKER) $@
 
 ./out/io.o : ./src/io.c ./inc/io.h ./inc/errors.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -34,13 +40,18 @@ unit_tests.exe: ./out/unit_test.o $(OBJS)
 ./out/utils.o : ./src/utils.c ./inc/utils.h ./inc/errors.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 ./out/main.o: ./src/main.c ./inc/*.h
 	mkdir -p out
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./out/unit_test.o: ./unit_tests/unit_tests.c ./inc/*.h
+./out/unit_test.o: ./unit_tests/check_main.c ./inc/*.h
 	mkdir -p out
+	$(CC) $(CFLAGS) -c $< -o $@
+
+./out/check_matrix_creation.o: ./unit_tests/check_matrix_creation.c ./inc/*.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+./out/check_matrix_operation.o: ./unit_tests/check_matrix_operation.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
