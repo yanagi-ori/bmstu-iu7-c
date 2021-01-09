@@ -117,7 +117,7 @@ int mult_matrices(int **matrix_base, int **matrix, int size)
 
 int **matrix_pow(int **matrix_base, int pow, int size)
 {
-    if (pow < 0)
+    if (pow < 0 || size <= 0)
     {
         return NULL;
     }

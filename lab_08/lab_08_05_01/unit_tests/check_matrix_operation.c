@@ -448,3 +448,122 @@ Suite *mult_matrices_suite(void)
 
     return s;
 }
+
+START_TEST(matrix_pow_negative)
+{
+    int **matrix = create_matrix(3, 3);
+    int array[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_pow(matrix, -1, 0);
+    if (new_matrix != NULL)
+    {
+        free_matrix(matrix);
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(matrix_pow_zero)
+{
+    int **matrix = create_matrix(3, 3);
+    int array[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_pow(matrix, 0, 3);
+    if (new_matrix == NULL)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+    int **temp_matrix = create_matrix(3, 3);
+    identity_matrix(temp_matrix, 3);
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (new_matrix[i][j] != temp_matrix[i][j])
+            {
+                free_matrix(new_matrix);
+                free_matrix(temp_matrix);
+                ck_abort();
+            }
+        }
+    }
+    free_matrix(new_matrix);
+    free_matrix(temp_matrix);
+
+}
+END_TEST
+
+START_TEST(matrix_pow_basic)
+{
+    int **matrix = create_matrix(3, 3);
+    int array[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = matrix_pow(matrix, 3, 3);
+    if (new_matrix == NULL)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+
+    if (new_matrix[0][0] != 124 || new_matrix[1][2] != 153 || new_matrix[2][1] != 192 || new_matrix[2][2] != 276)
+    {
+        free_matrix(matrix);
+        free_matrix(new_matrix);
+        ck_abort();
+    }
+
+    free_matrix(matrix);
+    free_matrix(new_matrix);
+}
+END_TEST
+
+Suite *matrix_pow_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("matrix_pow_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, matrix_pow_negative);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, matrix_pow_basic);
+    tcase_add_test(tc_pos, matrix_pow_zero);
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
