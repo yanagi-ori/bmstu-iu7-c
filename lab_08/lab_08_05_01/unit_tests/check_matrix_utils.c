@@ -13,6 +13,7 @@ START_TEST(imc_even)
     identity_matrix(matrix, 2);
     if (matrix[0][0] != 1 || matrix[0][1] != 0 || matrix[1][1] != 1 || matrix[1][0] != 0)
     {
+        free_matrix(matrix);
         ck_abort_msg("Invalid identity matrix");
     }
     free_matrix(matrix);
@@ -26,6 +27,7 @@ START_TEST(imc_odd)
     identity_matrix(matrix, 3);
     if (matrix[0][0] != 1 || matrix[0][1] != 0 || matrix[1][1] != 1 || matrix[1][0] != 0 || matrix[2][2] != 1)
     {
+        free_matrix(matrix);
         ck_abort_msg("Invalid identity matrix");
     }
     free_matrix(matrix);
@@ -64,6 +66,7 @@ START_TEST(cmm_basic_1)
     coord_of_min_in_matrix(matrix, 3, 3, &x, &y);
     if (x != 0 || y != 0)
     {
+        free_matrix(matrix);
         ck_abort();
     }
     free_matrix(matrix);
@@ -85,6 +88,7 @@ START_TEST(cmm_basic_2)
     coord_of_min_in_matrix(matrix, 3, 3, &x, &y);
     if (x != 2 || y != 2)
     {
+        free_matrix(matrix);
         ck_abort();
     }
     free_matrix(matrix);
@@ -125,6 +129,7 @@ START_TEST(dr_basic)
     delete_row(matrix, &rows, 3);
     if (rows != 3)
     {
+        free_matrix(matrix);
         ck_abort_msg("wrong num of rows\n");
     }
     k = 0;
@@ -135,6 +140,7 @@ START_TEST(dr_basic)
         {
             if (matrix[i][j] != new_array[k++])
             {
+                free_matrix(matrix);
                 ck_abort_msg("not correctly deleted row");
             }
         }
@@ -159,6 +165,7 @@ START_TEST(dr_several)
     delete_row(matrix, &rows, 3);
     if (rows != 3)
     {
+        free_matrix(matrix);
         ck_abort_msg("wrong num of rows\n");
     }
     k = 0;
@@ -169,6 +176,7 @@ START_TEST(dr_several)
         {
             if (matrix[i][j] != new_array[k++])
             {
+                free_matrix(matrix);
                 ck_abort_msg("not correctly deleted row");
             }
         }
@@ -211,6 +219,7 @@ START_TEST(dc_basic)
     delete_column(matrix, 2, &columns);
     if (columns != 2)
     {
+        free_matrix(matrix);
         ck_abort_msg("wrong num of columns");
     }
     k = 0;
@@ -221,6 +230,7 @@ START_TEST(dc_basic)
         {
             if (matrix[i][j] != new_array[k++])
             {
+                free_matrix(matrix);
                 ck_abort_msg("not correctly deleted row");
             }
         }
@@ -245,6 +255,7 @@ START_TEST(dc_several)
     delete_column(matrix, 2, &columns);
     if (columns != 2)
     {
+        free_matrix(matrix);
         ck_abort_msg("wrong num of columns");
     }
     k = 0;
@@ -255,6 +266,7 @@ START_TEST(dc_several)
         {
             if (matrix[i][j] != new_array[k++])
             {
+                free_matrix(matrix);
                 ck_abort_msg("not correctly deleted row");
             }
         }
@@ -302,6 +314,7 @@ START_TEST(cotn_basic)
         {
             if (source_matrix[i][j] != new_matrix[i][j])
             {
+                free_matrix(source_matrix);
                 ck_abort();
             }
         }
@@ -328,6 +341,7 @@ START_TEST(cotn_not_square)
     int rc = copy_old_to_new(source_matrix, new_matrix, 2, 3, 2);
     if (rc == 0)
     {
+        free_matrix(source_matrix);
         ck_abort();
     }
     free_matrix(source_matrix);
@@ -352,6 +366,7 @@ START_TEST(cotn_negative)
     int rc = copy_old_to_new(source_matrix, new_matrix, -1, -1, 1);
     if (rc == 0)
     {
+        free_matrix(source_matrix);
         ck_abort();
     }
     free_matrix(source_matrix);
@@ -397,16 +412,19 @@ START_TEST(fgmc_basic)
     int result = find_geom_mean_of_col(source_matrix, 3, 0);
     if (result - 0 >= 0.000001)
     {
+        free_matrix(source_matrix);
         ck_abort();
     }
     result = find_geom_mean_of_col(source_matrix, 3, 1);
     if (result - 2 >= 0.000001)
     {
+        free_matrix(source_matrix);
         ck_abort();
     }
     result = find_geom_mean_of_col(source_matrix, 3, 2);
     if (result - 5 >= 0.000001)
     {
+        free_matrix(source_matrix);
         ck_abort();
     }
 
