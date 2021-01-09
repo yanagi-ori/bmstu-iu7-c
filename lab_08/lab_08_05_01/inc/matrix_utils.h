@@ -21,4 +21,6 @@ void identity_matrix(int **matrix, int size);
 
 void coord_of_min_in_matrix(int **matrix, unsigned int rows, unsigned int columns, unsigned int *x, unsigned int *y);
 
+int find_geom_mean_of_col(int **matrix, unsigned int rows, unsigned int column);
+
 #endif //LAB_08_05_01_MATRIX_UTILS_H

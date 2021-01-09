@@ -75,7 +75,7 @@ void delete_column(int **matrix, int rows, int *columns)
 
 int copy_old_to_new(int **source_matrix, int **new_matrix, unsigned int rows, unsigned int cols, unsigned int target)
 {
-    if (target < rows || target < cols)
+    if (target < rows || target < cols || target <= 0)
     {
         return MATRIX_OUT_OF_RANGE;
     }

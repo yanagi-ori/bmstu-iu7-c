@@ -3,6 +3,7 @@
 //
 
 #include <check.h>
+#include <stdio.h>
 #include "../inc/matrix_creation.h"
 #include "../inc/matrix_utils.h"
 
@@ -186,6 +187,240 @@ Suite *delete_row_suite(void)
     tc_pos = tcase_create("positives");
     tcase_add_test(tc_pos, dr_basic);
     tcase_add_test(tc_pos, dr_several);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+
+//
+
+START_TEST(dc_basic)
+{
+    int **matrix = create_matrix(2, 3);
+    int array[6] = {4, 1, 7, 3, 7, 2};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    int columns = 3;
+    delete_column(matrix, 2, &columns);
+    if (columns != 2)
+    {
+        ck_abort_msg("wrong num of columns");
+    }
+    k = 0;
+    int new_array[4] = {4, 7, 3, 2};
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            if (matrix[i][j] != new_array[k++])
+            {
+                ck_abort_msg("not correctly deleted row");
+            }
+        }
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(dc_several)
+{
+    int **matrix = create_matrix(2, 3);
+    int array[6] = {4, 1, 7, 3, 7, 1};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    int columns = 3;
+    delete_column(matrix, 2, &columns);
+    if (columns != 2)
+    {
+        ck_abort_msg("wrong num of columns");
+    }
+    k = 0;
+    int new_array[4] = {4, 7, 3, 1};
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < columns; j++)
+        {
+            if (matrix[i][j] != new_array[k++])
+            {
+                ck_abort_msg("not correctly deleted row");
+            }
+        }
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+Suite *delete_column_suite(void)
+{
+    Suite *s;
+    TCase *tc_pos;
+
+    s = suite_create("delete_column_suite");
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, dc_basic);
+    tcase_add_test(tc_pos, dc_several);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+
+//
+
+START_TEST(cotn_basic)
+{
+    int **source_matrix = create_matrix(3,3);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            source_matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = create_matrix(3, 3);
+    copy_old_to_new(source_matrix, new_matrix, 3, 3, 3);
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (source_matrix[i][j] != new_matrix[i][j])
+            {
+                ck_abort();
+            }
+        }
+    }
+}
+END_TEST
+
+START_TEST(cotn_not_square)
+{
+    int **source_matrix = create_matrix(2,3);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            source_matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = create_matrix(2, 3);
+    int rc = copy_old_to_new(source_matrix, new_matrix, 2, 3, 2);
+    if (rc == 0)
+    {
+        ck_abort();
+    }
+    free_matrix(source_matrix);
+    free_matrix(new_matrix);
+}
+END_TEST
+
+START_TEST(cotn_negative)
+{
+    int **source_matrix = create_matrix(2,3);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            source_matrix[i][j] = array[k++];
+        }
+    }
+
+    int **new_matrix = create_matrix(2, 3);
+    int rc = copy_old_to_new(source_matrix, new_matrix, -1, -1, 1);
+    if (rc == 0)
+    {
+        ck_abort();
+    }
+    free_matrix(source_matrix);
+    free_matrix(new_matrix);
+}
+END_TEST
+
+Suite *copy_old_to_new_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("enlargement_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, cotn_not_square);
+    tcase_add_test(tc_neg, cotn_negative);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, cotn_basic);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
+
+//
+
+START_TEST(fgmc_basic)
+{
+    int **source_matrix = create_matrix(3,3);
+    int array[12] = {0, 2, 9, 1, 2, 2, 0, 2, 9};
+    int k = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            source_matrix[i][j] = array[k++];
+        }
+    }
+
+    int result = find_geom_mean_of_col(source_matrix, 3, 0);
+    if (result - 0 >= 0.000001)
+    {
+        ck_abort();
+    }
+    result = find_geom_mean_of_col(source_matrix, 3, 1);
+    if (result - 2 >= 0.000001)
+    {
+        ck_abort();
+    }
+    result = find_geom_mean_of_col(source_matrix, 3, 2);
+    if (result - 5 >= 0.000001)
+    {
+        ck_abort();
+    }
+
+    free_matrix(source_matrix);
+}
+END_TEST
+
+Suite *find_geom_mean_of_col_suite(void)
+{
+    Suite *s;
+    TCase *tc_pos;
+
+    s = suite_create("find_geom_mean_of_col_suite");
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, fgmc_basic);
 
     suite_add_tcase(s, tc_pos);
 
