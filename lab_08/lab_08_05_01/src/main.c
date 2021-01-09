@@ -4,7 +4,6 @@
 #include "../inc/utils.h"
 #include "../inc/matrix_operations.h"
 #include "../inc/io.h"
-#include "../inc/matrix_utils.h"
 
 int main()
 {
@@ -97,7 +96,6 @@ int main()
                                             {
                                                 rc = WRONG_DATA;
                                             }
-
                                         }
                                         else
                                         {
