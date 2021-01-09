@@ -446,3 +446,98 @@ Suite *find_geom_mean_of_col_suite(void)
 
     return s;
 }
+
+
+START_TEST(add_new_row_basic)
+{
+    int **matrix = create_matrix(3, 2);
+    int array[4] = {4, 1, 7, 3};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    unsigned int rows = 2;
+    int result_1 = find_geom_mean_of_col(matrix, 2, 0);
+    int result_2 = find_geom_mean_of_col(matrix, 2, 1);
+    int rc = add_new_row(matrix, &rows, 2, 3);
+    if (rc != 0){
+        free_matrix(matrix);
+        ck_abort();
+    }
+    printf("%d %d", result_1, result_2);
+    if (matrix[2][0] != result_1 || matrix[2][1] != result_2)
+    {
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(add_new_row_equal)
+{
+    int **matrix = create_matrix(2, 2);
+    int array[4] = {4, 1, 7, 3};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    unsigned int rows = 2;
+    int rc = add_new_row(matrix, &rows, 2, 2);
+    if (rc != 0){
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+START_TEST(add_new_row_less)
+{
+    int **matrix = create_matrix(2, 2);
+    int array[4] = {4, 1, 7, 3};
+    int k = 0;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            matrix[i][j] = array[k++];
+        }
+    }
+    unsigned int rows = 2;
+    int rc = add_new_row(matrix, &rows, 2, 1);
+    if (rc == 0){
+        free_matrix(matrix);
+        ck_abort();
+    }
+    free_matrix(matrix);
+}
+END_TEST
+
+Suite *add_new_row_suite(void)
+{
+    Suite *s;
+    TCase *tc_neg;
+    TCase *tc_pos;
+
+    s = suite_create("add_new_row_suite");
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, add_new_row_less);
+    suite_add_tcase(s, tc_neg);
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, add_new_row_basic);
+    tcase_add_test(tc_pos, add_new_row_equal);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
