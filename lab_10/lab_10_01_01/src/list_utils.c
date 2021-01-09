@@ -102,13 +102,30 @@ node_t *find(node_t *head, const void *data, int (*comparator)(const void *, con
 
 void append(node_t **head_a, node_t **head_b)
 {
-    node_t *temp_node = *head_a;
-    while (temp_node->next->next != NULL)
+    if (!head_a)
     {
-        temp_node = temp_node->next;
+        return;
     }
-    temp_node->next = *head_b;
-    *head_b = NULL;
+    if (!head_b)
+    {
+        return;
+    }
+
+    node_t *temp_node = *head_a;
+    if (temp_node)
+    {
+        while (temp_node->next != NULL)
+        {
+            temp_node = temp_node->next;
+        }
+        temp_node->next = *head_b;
+        *head_b = NULL;
+    }
+    else
+    {
+        *head_a = *head_b;
+        *head_b = NULL;
+    }
 }
 
 void print_list(node_t *head)
