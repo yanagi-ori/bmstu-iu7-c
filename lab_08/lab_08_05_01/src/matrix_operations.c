@@ -104,11 +104,6 @@ int mult_matrices(int **matrix_base, int **matrix, int size)
         for (unsigned int j = 0; j < size; j++)
         {
             matrix_base[i][j] = find_mult_result(temp_matrix, matrix, size, i, j);
-            if (matrix_base[i][j] < 0)
-            {
-                free_matrix(temp_matrix);
-                return MATRIX_MULTIPLICATION_ERROR;
-            }
         }
     }
     free_matrix(temp_matrix);
