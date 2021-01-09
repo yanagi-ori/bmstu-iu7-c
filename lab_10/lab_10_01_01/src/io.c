@@ -4,9 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "../inc/struct.h"
-#include "../inc/memory_management.h"
+#include "../inc/utils.h"
 #include "../inc/io.h"
 #include "../inc/errors.h"
 #include "../inc/list_utils.h"
@@ -27,7 +26,6 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
     memory_manager->nodes_heap[memory_manager->current_size] = node;
     while (true)
     {
-
         if (node->data == NULL)
         {
             return MEMORY_ALLOCATION_ERROR;
@@ -41,10 +39,10 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
         {
             return IO_ERROR;
         }
-        ((student_t *) node->data)->surname = strdup(temp_surname);
-        ((student_t *) node->data)->name = strdup(temp_name);
-        ((student_t *) node->data)->year = strdup(temp_year);
-        ((student_t *) node->data)->group = strdup(temp_group);
+        ((student_t *) node->data)->surname = my_strdup(temp_surname);
+        ((student_t *) node->data)->name = my_strdup(temp_name);
+        ((student_t *) node->data)->year = my_strdup(temp_year);
+        ((student_t *) node->data)->group = my_strdup(temp_group);
 
         rc = append_node(node);
         if (rc == MEMORY_ALLOCATION_ERROR)

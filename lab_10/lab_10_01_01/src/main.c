@@ -43,9 +43,7 @@ int main(int argc, char **argv)
                             else
                             {
                                 student_t *student = (student_t *) (node->data);
-                                printf("%s %s %s %s\n",
-                                       student->surname, student->name,
-                                       student->year, student->group);
+                                printf("%s %s %s %s\n", student->surname, student->name, student->year, student->group);
                             }
                         }
                         else if (strcmp(argv[2], "append") == 0 && argc == 4)
@@ -75,7 +73,6 @@ int main(int argc, char **argv)
                                     free(new_mm->nodes_heap);
                                     free(new_mm);
                                 }
-
                             }
                             else
                             {
