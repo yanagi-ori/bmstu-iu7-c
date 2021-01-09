@@ -66,8 +66,19 @@ int comparator(const void *a, const void *b)
 
 void *pop_front(node_t **head)
 {
+    if (!head)
+    {
+        return NULL;
+    }
+    if ((*head) == NULL)
+    {
+        return NULL;
+    }
+    node_t *node;
     void *data = (*head)->data;
-    *head = (*head)->next;
+    node = (*head)->next;
+    free(*head);
+    (*head) = node;
     return data;
 }
 
