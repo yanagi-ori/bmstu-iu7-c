@@ -709,3 +709,95 @@ Suite *add_new_col_suite(void)
 
     return s;
 }
+
+//
+
+START_TEST(fmr_basic)
+{
+    int **matrix_a = create_matrix(3, 3);
+    int **matrix_b = create_matrix(3, 3);
+    int array_a[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int array_b[9] = {3, 3, 3, 8, 9, 2, 1, 2, 2};
+    int k = 0;
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            matrix_a[i][j] = array_a[k];
+            matrix_b[i][j] = array_b[k];
+            k++;
+        }
+    }
+
+    int result = find_mult_result(matrix_a, matrix_b, 3, 0, 0);
+    if (result != 25)
+    {
+        free_matrix(matrix_b);
+        free_matrix(matrix_a);
+        ck_abort();
+    }
+    result = find_mult_result(matrix_a, matrix_b, 3, 0, 1);
+    if (result != 36)
+    {
+        free_matrix(matrix_b);
+        free_matrix(matrix_a);
+        ck_abort();
+    }
+    result = find_mult_result(matrix_a, matrix_b, 3, 2, 2);
+    if (result != 21)
+    {
+        free_matrix(matrix_b);
+        free_matrix(matrix_a);
+        ck_abort();
+    }
+    free_matrix(matrix_a);
+    free_matrix(matrix_b);
+}
+END_TEST
+
+START_TEST(fmr_one)
+{
+    int **matrix_a = create_matrix(1, 1);
+    int **matrix_b = create_matrix(1, 1);
+    int array_a[9] = {0, 2, 9, 1, 2, 2, 3, 3, 3};
+    int array_b[9] = {3, 3, 3, 8, 9, 2, 1, 2, 2};
+    int k = 0;
+
+    for (int i = 0; i < 1; i++)
+    {
+        for (int j = 0; j < 1; j++)
+        {
+            matrix_a[i][j] = array_a[k];
+            matrix_b[i][j] = array_b[k];
+            k++;
+        }
+    }
+
+    int result = find_mult_result(matrix_a, matrix_b, 1, 0, 0);
+    free_matrix(matrix_a);
+    free_matrix(matrix_b);
+    if (result != 0)
+    {
+        ck_abort();
+    }
+}
+END_TEST
+
+
+
+Suite *find_mult_result_suite(void)
+{
+    Suite *s;
+    TCase *tc_pos;
+
+    s = suite_create("find_mult_result_suite");
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, fmr_basic);
+    tcase_add_test(tc_pos, fmr_one);
+
+    suite_add_tcase(s, tc_pos);
+
+    return s;
+}
