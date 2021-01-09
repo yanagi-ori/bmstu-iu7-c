@@ -66,56 +66,31 @@ int main()
                                             int r, g;
                                             printf("Enter ro and gamma numbers: ");
                                             rc = scanf("%d%d", &r, &g);
-                                            if (rc == 2 && (r > 0 || g > 0))
+                                            if (rc == 2)
                                             {
-                                                rc = 0;
-                                                int **mult_a = NULL;
-                                                for (int i = 0; i < r; i++)
+                                                int **left_result = matrix_pow(matrix_a_new, r, z);
+                                                int **right_result = matrix_pow(matrix_b_new, g, z);
+                                                if (left_result != NULL && right_result != NULL)
                                                 {
-                                                    rc = matrix_power(&mult_a, &matrix_a_new, z);
-                                                    if (rc != 0)
-                                                    {
-                                                        break;
-                                                    }
-                                                }
-                                                if (rc == 0)
-                                                {
-                                                    int **mult_b = NULL;
-                                                    for (int i = 0; i < g; i++)
-                                                    {
-                                                        rc = matrix_power(&mult_b, &matrix_b_new, z);
-                                                        if (rc != 0)
-                                                        {
-                                                            break;
-                                                        }
-                                                    }
-
+                                                    rc = mult_matrices(left_result, right_result, z);
                                                     if (rc == 0)
                                                     {
-                                                        int **result_matrix = multiply_different_matrices(mult_a,
-                                                                                                          mult_b,
-                                                                                                          z);
-                                                        if (result_matrix != NULL)
-                                                        {
-
-                                                            output_matrix(result_matrix, z, z);
-                                                            free_matrix(result_matrix);
-                                                        }
-                                                        else
-                                                        {
-                                                            rc = MATRIX_MULTIPLICATION_ERROR;
-                                                        }
+                                                        output_matrix(left_result, z, z);
                                                     }
-
-
-                                                    if (mult_b != NULL)
-                                                    {
-                                                        free_matrix(mult_b);
-                                                    }
+                                                    free_matrix(left_result);
+                                                    free_matrix(right_result);
                                                 }
-                                                if (mult_a != NULL)
+                                                else
                                                 {
-                                                    free_matrix(mult_a);
+                                                    rc = MATRIX_MULTIPLICATION_ERROR;
+                                                    if (left_result != NULL)
+                                                    {
+                                                        free_matrix(left_result);
+                                                    }
+                                                    if (right_result != NULL)
+                                                    {
+                                                        free_matrix(right_result);
+                                                    }
                                                 }
                                             }
                                             else

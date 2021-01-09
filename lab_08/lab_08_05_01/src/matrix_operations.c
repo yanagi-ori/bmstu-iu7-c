@@ -97,59 +97,52 @@ int **matrix_enlargement(int **source_matrix, unsigned int rows, unsigned int co
     return new_matrix;
 }
 
-int **multiply_different_matrices(int **matrix_a, int **matrix_b, unsigned int size)
+int mult_matrices(int **matrix_base, int **matrix, int size)
 {
-    if (size == 0)
+    int **temp_matrix = create_matrix(size, size);
+    if (temp_matrix == NULL)
     {
-        return NULL;
+        return MATRIX_MULTIPLICATION_ERROR;
     }
-
-    int **result_matrix = create_matrix(size, size);
-    if (result_matrix == NULL)
-    {
-        return NULL;
-    }
-
+    copy_old_to_new(matrix_base, temp_matrix, size, size, size);
     for (unsigned int i = 0; i < size; i++)
     {
         for (unsigned int j = 0; j < size; j++)
         {
-            result_matrix[i][j] = find_mult_result(matrix_a, matrix_b, size, i, j);
-            if (result_matrix[i][j] < 0)
+            matrix_base[i][j] = find_mult_result(temp_matrix, matrix, size, i, j);
+            if (matrix_base[i][j] < 0)
             {
-                free_matrix(result_matrix);
-                return NULL;
+                free_matrix(temp_matrix);
+                return MATRIX_MULTIPLICATION_ERROR;
             }
         }
     }
-
-    return result_matrix;
+    free_matrix(temp_matrix);
+    return 0;
 }
 
-int matrix_power(int ***matrix_a, int ***matrix_b, int size)
+int **matrix_pow(int **matrix_base, int pow, int size)
 {
-    if (*matrix_a == NULL)
+    if (pow < 0)
     {
-        *matrix_a = create_matrix(size, size);
-        if (matrix_a == NULL)
-        {
-            return MATRIX_MEMORY_ALLOCATION_ERROR;
-        }
-        int rc = copy_old_to_new(*matrix_b, *matrix_a, size, size, size);
-        if (rc != 0)
-        {
-            return rc;
-        }
-        return 0;
+        return NULL;
     }
-
-    int **temp_matrix;
-    temp_matrix = multiply_different_matrices(*matrix_a, *matrix_b, size);
-    if (temp_matrix == NULL)
+    else
     {
-        return MATRIX_MEMORY_ALLOCATION_ERROR;
+        int **new_matrix = create_matrix(size, size);
+        if (new_matrix == NULL)
+        {
+            return NULL;
+        }
+        identity_matrix(new_matrix, size);
+        for (int i = 0; i < pow; i++)
+        {
+            int rc = mult_matrices(new_matrix, matrix_base, size);
+            if (rc != 0)
+            {
+                return NULL;
+            }
+        }
+        return new_matrix;
     }
-    free_matrix(*matrix_a);
-    *matrix_a = temp_matrix;
-    return 0;
 }

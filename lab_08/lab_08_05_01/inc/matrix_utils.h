@@ -17,4 +17,6 @@ int add_new_column(int **matrix, unsigned int rows, unsigned int *columns, unsig
 
 int find_mult_result(int **matrix_a, int **matrix_b, unsigned int size, unsigned int x, unsigned int y);
 
+void identity_matrix(int **matrix, int size);
+
 #endif //LAB_08_05_01_MATRIX_UTILS_H
