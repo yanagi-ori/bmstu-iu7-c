@@ -35,6 +35,9 @@ app.exe: ./out/main.o $(OBJS)
 ./out/utils.o: ./src/utils.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
+./out/sort.o: ./src/sort.c ./inc/*.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
 ./out/unit_test.o: ./unit_tests/check_main.c ./inc/*.h
 	mkdir -p out
 	$(CC) $(CFLAGS) -c $< -o $@
