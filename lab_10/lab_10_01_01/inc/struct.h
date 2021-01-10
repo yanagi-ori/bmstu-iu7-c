@@ -23,16 +23,4 @@ struct node
     node_t *next;
 };
 
-typedef struct linked_list
-{
-    node_t *head;
-} linked_list_t;
-
-typedef struct memory_manager
-{
-    node_t **nodes_heap;
-    int current_size;
-    int limit;
-} memory_manager_t;
-
 #endif //LAB_10_01_01_STRUCT_H

@@ -5,63 +5,43 @@
 #include "../inc/struct.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "../inc/list_utils.h"
-#include "../inc/errors.h"
+#include "../inc/memory_management.h"
 
-
-short create_liked_list(linked_list_t *list)
+node_t *create_node(void *data)
 {
-    list->head = NULL;
+    node_t *node = (node_t *) malloc(sizeof(node_t));
 
-    node_t *curr_element = malloc(sizeof(node_t));
-
-    if (curr_element == NULL)
+    if (!node)
     {
-        return MEMORY_ALLOCATION_ERROR;
+        return NULL;
     }
 
-    curr_element->next = NULL;
-    ((curr_element)->data) = malloc(sizeof(student_t));
-    if (curr_element->data == NULL)
-    {
-        free(curr_element);
-        return MEMORY_ALLOCATION_ERROR;
-    }
-    list->head = curr_element;
-    return 0;
+    node->data = data;
+    node->next = NULL;
+
+    return node;
 }
 
-short append_node(node_t *node)
+void free_list(node_t *head)
 {
-    node_t *new_element = malloc(sizeof(node_t));
-    if (new_element == NULL)
+    node_t *temp_node = NULL;
+
+    while (head && head->next)
     {
-        return MEMORY_ALLOCATION_ERROR;
+        temp_node = head->next;
+        free_data(head->data);
+        free(head);
+        head = temp_node->next;
     }
-    new_element->data = malloc(sizeof(student_t));
-    if (new_element == NULL)
-    {
-        free(new_element);
-        return MEMORY_ALLOCATION_ERROR;
-    }
-    new_element->next = NULL;
-    node->next = new_element;
-    return 0;
 }
 
 int comparator(const void *a, const void *b)
 {
-    student_t *student = ((node_t *) a)->data;
-    if (strcmp(student->surname, (char *) b) == 0 || strcmp(student->name, (char *) b) == 0)
-    {
-        return 0;
-    }
-    if (strcmp(student->year, (char *) b) == 0 || strcmp(student->group, (char *) b) == 0)
-    {
-        return 0;
-    }
-    return -1;
+    student_t *student_a = (student_t *) a;
+    int stgr_1 = atoi(student_a->group);
+    int stgr_2 = atoi((char *) b);
+    return stgr_1 - stgr_2;
 }
 
 void *pop_front(node_t **head)

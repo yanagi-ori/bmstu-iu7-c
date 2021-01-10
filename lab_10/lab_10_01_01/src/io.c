@@ -3,34 +3,22 @@
 //
 
 #include <stdio.h>
-#include <stdlib.h>
 #include "../inc/struct.h"
-#include "../inc/utils.h"
 #include "../inc/io.h"
 #include "../inc/errors.h"
 #include "../inc/list_utils.h"
+#include "../inc/memory_management.h"
 
 
-short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manager)
+short load_file(FILE *file, node_t **head)
 {
-    char temp_surname[41], temp_name[41], temp_year[5], temp_group[41];
+    char temp_surname[41], temp_name[41], temp_year[5], temp_group[5];
 
-    int rv = 4;
-    int rc;
+    int rv;
 
-    if (list == NULL)
+    do
     {
-        return MEMORY_ALLOCATION_ERROR;
-    }
-    node_t *node = list->head;
-    memory_manager->nodes_heap[memory_manager->current_size] = node;
-    while (true)
-    {
-        if (node->data == NULL)
-        {
-            return MEMORY_ALLOCATION_ERROR;
-        }
-        rv = fscanf(file, "%40s%40s%4s%40s", temp_surname, temp_name, temp_year, temp_group);
+        rv = fscanf(file, "%40s%40s%4s%4s", temp_surname, temp_name, temp_year, temp_group);
         if (rv == EOF)
         {
             break;
@@ -39,29 +27,22 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
         {
             return IO_ERROR;
         }
-        ((student_t *) node->data)->surname = my_strdup(temp_surname);
-        ((student_t *) node->data)->name = my_strdup(temp_name);
-        ((student_t *) node->data)->year = my_strdup(temp_year);
-        ((student_t *) node->data)->group = my_strdup(temp_group);
 
-        rc = append_node(node);
-        if (rc == MEMORY_ALLOCATION_ERROR)
+        student_t *new_student = create_data(temp_surname, temp_name, temp_year, temp_group);
+        if (!new_student)
         {
             return MEMORY_ALLOCATION_ERROR;
         }
-        memory_manager->current_size++;
-        if (memory_manager->current_size > memory_manager->limit)
+
+        node_t *new_node = create_node(new_student);
+        if (!new_node)
         {
-            memory_manager->limit += 10;
-            memory_manager->nodes_heap = realloc(memory_manager->nodes_heap, memory_manager->limit);
-            if (memory_manager->nodes_heap == NULL)
-            {
-                return MEMORY_ALLOCATION_ERROR;
-            }
+            free_data(new_student);
+            return MEMORY_ALLOCATION_ERROR;
         }
-        node = node->next;
-        memory_manager->nodes_heap[memory_manager->current_size] = node;
-    }
+
+        append(head, &new_node);
+    } while (true);
 
     return 0;
 }

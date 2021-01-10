@@ -5,10 +5,6 @@
 #ifndef LAB_10_01_01_LIST_UTILS_H
 #define LAB_10_01_01_LIST_UTILS_H
 
-short append_node(node_t *node);
-
-short create_liked_list(linked_list_t *list);
-
 void *pop_front(node_t **head);
 
 node_t *find(node_t *head, const void *data, int (*comparator)(const void *, const void *));

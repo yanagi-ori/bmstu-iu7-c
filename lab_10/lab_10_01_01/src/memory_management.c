@@ -4,35 +4,39 @@
 
 #include <stdlib.h>
 #include "../inc/struct.h"
-#include "../inc/errors.h"
 #include "../inc/memory_management.h"
+#include "../inc/utils.h"
 
 
-int create_memory_manager(memory_manager_t *memory_manager, int limit)
+student_t *create_data(char *surname, char *name, char *year, char *group)
 {
-    memory_manager->limit = limit;
-    memory_manager->nodes_heap = malloc(sizeof(node_t *) * limit);
-    if (memory_manager->nodes_heap == NULL)
+    student_t *new_student = (student_t *) malloc(sizeof(student_t));
+    if (!new_student)
     {
-        return MEMORY_ALLOCATION_ERROR;
+        return NULL;
     }
-    memory_manager->current_size = 0;
 
-    return 0;
+    new_student->surname = my_strdup(surname);
+    new_student->name = my_strdup(name);
+    new_student->year = my_strdup(year);
+    new_student->group = my_strdup(group);
+
+    return new_student;
 }
 
-
-void free_memory_manager(memory_manager_t *memory_manager)
+void free_data(student_t *data)
 {
-    for (int i = 0; i < memory_manager->current_size; i++)
+    if (!data)
     {
-        free(((student_t *) memory_manager->nodes_heap[i]->data)->surname);
-        free(((student_t *) memory_manager->nodes_heap[i]->data)->name);
-        free(((student_t *) memory_manager->nodes_heap[i]->data)->year);
-        free(((student_t *) memory_manager->nodes_heap[i]->data)->group);
-        free(((student_t *) memory_manager->nodes_heap[i]->data));
-        free(memory_manager->nodes_heap[i]);
+        return;
     }
-    free(((student_t *) memory_manager->nodes_heap[memory_manager->current_size]->data));
-    free(memory_manager->nodes_heap[memory_manager->current_size]);
+    if (data->surname)
+    {
+        free(data->surname);
+        free(data->name);
+        free(data->year);
+        free(data->group);
+    }
+    free(data);
+
 }
