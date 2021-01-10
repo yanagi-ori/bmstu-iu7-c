@@ -44,6 +44,10 @@ short load_file(FILE *file, node_t **head)
         append(head, &new_node);
     } while (true);
 
+    if (*head == NULL){
+        return EMPTY_FILE;
+    }
+
     return 0;
 }
 
