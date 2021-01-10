@@ -1,0 +1,27 @@
+Output of list a:
+Ageev 33
+Alahov 31
+Batrakov 32
+Bogatyrev 35
+Borenko 32
+Zaitseva 12
+Ismoilov 33
+Klimov 20
+Kozlova 31
+Lisnevsky 1
+Mejerovsky 23
+Muhamediev 43
+Nikulenko 43
+Nishizov 23
+Pilipchuk 12
+Pogosyan 67
+Skotnikov 12
+Suchkova 45
+Sysoeva 21
+Terehov 43
+Trunov 16
+Zhigzhid 18
+Chong-Nguen 11
+
+Output of list b:
+The list is empty
