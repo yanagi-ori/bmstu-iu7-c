@@ -63,11 +63,11 @@ int main(int argc, char **argv)
                         rc = load_file(new_file, &head2);
                         if (rc == 0)
                         {
-                            append(&(head), &(head));
+                            append(&head, &head2);
                             printf("Output of list a: \n");
                             print_list(head);
                             printf("\nOutput of list b: \n");
-                            print_list(head);
+                            print_list(head2);
                         }
 
                         fclose(new_file);
