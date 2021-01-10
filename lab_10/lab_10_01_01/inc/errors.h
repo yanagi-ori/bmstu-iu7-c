@@ -9,5 +9,6 @@
 #define IO_ERROR 2
 #define MEMORY_ALLOCATION_ERROR 3
 #define FIND_ERROR 4
+#define SORT_ERROR 5
 
 #endif //LAB_10_01_01_ERRORS_H
