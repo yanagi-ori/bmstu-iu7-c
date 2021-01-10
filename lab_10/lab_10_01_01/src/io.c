@@ -65,3 +65,18 @@ short load_file(FILE *file, linked_list_t *list, memory_manager_t *memory_manage
 
     return 0;
 }
+
+void print_list(node_t *head)
+{
+    node_t *temp = head;
+    if (temp == NULL)
+    {
+        printf("The list is empty\n");
+        return;
+    }
+    while (temp != NULL)
+    {
+        printf("%s %s\n", ((student_t *) temp->data)->surname, ((student_t *) temp->data)->group);
+        temp = temp->next;
+    }
+}

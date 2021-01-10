@@ -17,6 +17,8 @@ int comparator(const void *a, const void *b);
 
 void append(node_t **head_a, node_t **head_b);
 
-void print_list(node_t *head);
+node_t *create_node(void *data);
+
+void free_list(node_t *head);
 
 #endif //LAB_10_01_01_LIST_UTILS_H

@@ -127,18 +127,3 @@ void append(node_t **head_a, node_t **head_b)
         *head_b = NULL;
     }
 }
-
-void print_list(node_t *head)
-{
-    node_t *temp = head;
-    if (temp == NULL)
-    {
-        printf("The list is empty\n");
-        return;
-    }
-    while (temp->next != NULL)
-    {
-        printf("%s\n", ((student_t *) temp->data)->surname);
-        temp = temp->next;
-    }
-}
