@@ -26,12 +26,10 @@ student_t *create_data(char *surname, char *name, char *year, char *group)
 
 void free_data(student_t *data)
 {
-
     free(data->surname);
     free(data->name);
     free(data->year);
     free(data->group);
 
     free(data);
-
 }
