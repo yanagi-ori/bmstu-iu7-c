@@ -6,12 +6,18 @@
 
 Suite *test_sort_suite(void);
 
+Suite *test_memory_management_suite(void);
+
 int main(void)
 {
     int no_failed = 0;
     SRunner *runner;
 
     runner = srunner_create(test_sort_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(test_memory_management_suite());
     srunner_run_all(runner, CK_VERBOSE);
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
