@@ -10,7 +10,7 @@
 
 node_t *create_node(void *data)
 {
-    node_t *node = (node_t *) malloc(sizeof(node_t));
+    node_t *node = malloc(sizeof(node_t));
 
     if (!node)
     {
@@ -25,14 +25,12 @@ node_t *create_node(void *data)
 
 void free_list(node_t *head)
 {
-    node_t *temp_node = NULL;
-
-    while (head && head->next)
+    while (head)
     {
-        temp_node = head->next;
+        node_t *next = head->next;
         free_data(head->data);
         free(head);
-        head = temp_node->next;
+        head = next;
     }
 }
 

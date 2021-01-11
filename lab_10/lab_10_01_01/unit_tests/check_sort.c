@@ -8,6 +8,7 @@
 #include "../inc/struct.h"
 #include "../inc/io.h"
 #include "../inc/sort.h"
+#include "../inc/list_utils.h"
 
 int get_len(node_t *head)
 {
@@ -39,15 +40,19 @@ START_TEST(test_sort)
         len = get_len(head);
         if (len == -1)
         {
+            free_list(head);
             ck_abort();
         }
         node_t *sorted = sort(head, sort_cmp);
         if (!sorted)
         {
+            free_list(head);
             ck_abort();
         }
+        printf("%d %d", len, get_len(sorted));
         if (len != get_len(sorted))
         {
+            free_list(sorted);
             ck_abort_msg("incorrect len");
         }
 
@@ -58,15 +63,19 @@ START_TEST(test_sort)
             student_t *student2 = temp_node->next->data;
             if (atoi(student1->group) > atoi(student2->group))
             {
+                free_list(sorted);
                 ck_abort_msg("sort order incorrect %s %s", student1->group, student2->group);
             }
             temp_node = temp_node->next;
         }
+        free_list(sorted);
     }
     else
     {
+        fclose(file);
         ck_abort();
     }
+    fclose(file);
 }
 END_TEST
 

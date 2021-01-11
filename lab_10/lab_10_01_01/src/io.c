@@ -31,6 +31,7 @@ short load_file(FILE *file, node_t **head)
         student_t *new_student = create_data(temp_surname, temp_name, temp_year, temp_group);
         if (!new_student)
         {
+            free_list(*head);
             return MEMORY_ALLOCATION_ERROR;
         }
 
@@ -38,6 +39,7 @@ short load_file(FILE *file, node_t **head)
         if (!new_node)
         {
             free_data(new_student);
+            free_list(*head);
             return MEMORY_ALLOCATION_ERROR;
         }
 
