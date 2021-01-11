@@ -1,6 +1,6 @@
 CFLAGS := -Wall -Werror -std=gnu99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
 OBJS := ./out/io.o ./out/lu.o ./out/mm.o ./out/utils.o ./out/sort.o
-UTOBJS := ./unit_tests/check_sort.o
+UTOBJS := ./out/check_sort.o
 CC := gcc
 LINKER := -o
 
@@ -45,7 +45,7 @@ unit_tests.exe: ./out/unit_test.o $(OBJS) $(UTOBJS)
 	mkdir -p out
 	$(CC) $(CFLAGS) -c $< -o $@
 
-./unit_tests/check_sort.o: ./unit_tests/check_sort.c ./inc/*.h
+./out/check_sort.o: ./unit_tests/check_sort.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
