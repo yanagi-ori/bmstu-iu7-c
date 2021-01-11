@@ -26,12 +26,13 @@ int get_len(node_t *head)
     return len;
 }
 
-START_TEST(test_sort)
+START_TEST(test_sort_basic)
 {
     int len;
     node_t *head = NULL;
     FILE *file = fopen("./func_tests/pos_01_in.txt", "r");
-    if (!file){
+    if (!file)
+    {
         ck_abort();
     }
     int rc = load_file(file, &head);
@@ -79,15 +80,31 @@ START_TEST(test_sort)
 }
 END_TEST
 
+START_TEST(test_sort_null)
+{
+    node_t *head = NULL;
+    node_t *sorted = sort(head, sort_cmp);
+    if (sorted != NULL)
+    {
+        ck_abort();
+    }
+}
+END_TEST
+
 Suite *test_sort_suite(void)
 {
-    Suite *suite = suite_create("utils_suite");
+
+    Suite *suite = suite_create("sort_suite");
     TCase *tc_pos;
+    TCase *tc_neg;
 
     tc_pos = tcase_create("positives");
-    tcase_add_test(tc_pos, test_sort);
-
+    tcase_add_test(tc_pos, test_sort_basic);
     suite_add_tcase(suite, tc_pos);
+
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, test_sort_null);
+    suite_add_tcase(suite, tc_neg);
 
     return suite;
 }
