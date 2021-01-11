@@ -50,7 +50,6 @@ START_TEST(test_sort_basic)
             free_list(head);
             ck_abort();
         }
-        printf("%d %d", len, get_len(sorted));
         if (len != get_len(sorted))
         {
             free_list(sorted);
