@@ -27,6 +27,7 @@ int main(int argc, char **argv)
                     student_t *student = (student_t *) pop_front(&head);
                     printf("%s %s %s %s\n", student->surname, student->name, student->year, student->group);
                     free_data(student);
+                    free_list(head);
                 }
                 else if (strcmp(argv[2], "find") == 0)
                 {
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
                         student_t *student = (student_t *) (node->data);
                         printf("%s %s %s %s\n", student->surname, student->name, student->year, student->group);
                     }
+                    free_list(head);
                 }
                 else if (strcmp(argv[2], "sort") == 0 && argc == 3)
                 {
@@ -52,6 +54,7 @@ int main(int argc, char **argv)
                     {
                         print_list(sorted_list);
                     }
+                    free_list(sorted_list);
                 }
                 else if (strcmp(argv[2], "append") == 0 && argc == 4)
                 {
@@ -76,10 +79,11 @@ int main(int argc, char **argv)
                     {
                         rc = IO_ERROR;
                     }
+                    free_list(head);
                 }
             }
 
-            free_list(head);
+
 
             fclose(file);
         }
