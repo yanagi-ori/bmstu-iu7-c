@@ -1,6 +1,6 @@
 CFLAGS := -Wall -Werror -std=gnu99 -Wvla -Wfloat-equal -Wfloat-conversion -pedantic -lm -lrt
-OBJS := ./out/io.o ./out/lu.o ./out/mm.o
-UTOBJS :=
+OBJS := ./out/io.o ./out/lu.o ./out/mm.o ./out/utils.o ./out/sort.o
+UTOBJS := ./unit_tests/check_sort.o
 CC := gcc
 LINKER := -o
 
@@ -18,6 +18,9 @@ endif
 
 app.exe: ./out/main.o $(OBJS)
 	$(CC) $^ $(LINKER) $@
+
+unit_tests.exe: ./out/unit_test.o $(OBJS) $(UTOBJS)
+	$(CC) $^ -lcheck $(LINKER) $@
 
 ./out/io.o : ./src/io.c ./inc/*.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -42,6 +45,8 @@ app.exe: ./out/main.o $(OBJS)
 	mkdir -p out
 	$(CC) $(CFLAGS) -c $< -o $@
 
+./unit_tests/check_sort.o: ./unit_tests/check_sort.c ./inc/*.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: clean
 
