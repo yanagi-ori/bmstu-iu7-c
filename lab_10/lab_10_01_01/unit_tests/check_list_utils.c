@@ -23,12 +23,12 @@ START_TEST(test_create_node)
     }
 
     free_data(student);
+    free_list(node);
 }
 END_TEST
 
 Suite *test_create_node_suite(void)
 {
-
     Suite *suite = suite_create("create_node_suite");
     TCase *tc_pos;
 
