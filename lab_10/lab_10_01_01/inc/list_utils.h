@@ -17,4 +17,6 @@ node_t *create_node(void *data);
 
 void free_list(node_t *head);
 
+int get_len(node_t *head);
+
 #endif //LAB_10_01_01_LIST_UTILS_H

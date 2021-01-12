@@ -10,22 +10,6 @@
 #include "../inc/sort.h"
 #include "../inc/list_utils.h"
 
-int get_len(node_t *head)
-{
-    int len = 0;
-    node_t *temp = head;
-    if (temp == NULL)
-    {
-        return -1;
-    }
-    while (temp != NULL)
-    {
-        len++;
-        temp = temp->next;
-    }
-    return len;
-}
-
 START_TEST(test_sort_basic)
 {
     int len;

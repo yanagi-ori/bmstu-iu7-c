@@ -105,3 +105,19 @@ void append(node_t **head_a, node_t **head_b)
         *head_b = NULL;
     }
 }
+
+int get_len(node_t *head)
+{
+    int len = 0;
+    node_t *temp = head;
+    if (temp == NULL)
+    {
+        return -1;
+    }
+    while (temp != NULL)
+    {
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
