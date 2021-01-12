@@ -12,6 +12,8 @@ Suite *test_utils_suite(void);
 
 Suite *test_io_suite(void);
 
+Suite *test_create_node_suite(void);
+
 int main(void)
 {
     int no_failed = 0;
@@ -30,6 +32,10 @@ int main(void)
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
     runner = srunner_create(test_io_suite());
+    srunner_run_all(runner, CK_VERBOSE);
+    no_failed += srunner_ntests_failed(runner);
+    srunner_free(runner);
+    runner = srunner_create(test_create_node_suite());
     srunner_run_all(runner, CK_VERBOSE);
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
