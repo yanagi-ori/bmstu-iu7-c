@@ -24,7 +24,6 @@ START_TEST(test_create_node)
         ck_abort();
     }
 
-    free_data(student);
     free_list(node);
 }
 END_TEST
@@ -108,6 +107,8 @@ START_TEST(test_pop_front_positive)
     {
         ck_abort_msg("deleted incorrect num of nodes");
     }
+
+    free_data(data);
 
     free_list(head);
 
