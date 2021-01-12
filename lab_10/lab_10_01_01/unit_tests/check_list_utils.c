@@ -143,3 +143,99 @@ Suite *test_pop_front_suite(void)
 
     return suite;
 }
+
+START_TEST(test_find_one)
+{
+    FILE* file = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file)
+    {
+        ck_abort_msg("could not open file");
+    }
+
+    node_t *head = NULL;
+    int rc = load_file(file, &head);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file");
+    }
+
+    node_t *node = find(head, "20", comparator);
+    if (strcmp(((student_t *) node->data)->surname, "Klimov") != 0)
+    {
+        ck_abort_msg("found incorrect node");
+    }
+
+    fclose(file);
+    free_list(head);
+}
+END_TEST
+
+START_TEST(test_find_several)
+{
+    FILE* file = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file)
+    {
+        ck_abort_msg("could not open file");
+    }
+
+    node_t *head = NULL;
+    int rc = load_file(file, &head);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file");
+    }
+
+    node_t *node = find(head, "32", comparator);
+    if (strcmp(((student_t *) node->data)->surname, "Batrakov") != 0)
+    {
+        ck_abort_msg("found incorrect node");
+    }
+
+    fclose(file);
+    free_list(head);
+}
+END_TEST
+
+START_TEST(test_find_no)
+{
+    FILE* file = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file)
+    {
+        ck_abort_msg("could not open file");
+    }
+
+    node_t *head = NULL;
+    int rc = load_file(file, &head);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file");
+    }
+
+    node_t *node = find(head, "99", comparator);
+    if (node != NULL)
+    {
+        ck_abort();
+    }
+
+    fclose(file);
+    free_list(head);
+}
+END_TEST
+
+Suite *test_find_suite(void)
+{
+    Suite *suite = suite_create("find_suite");
+    TCase *tc_pos;
+    TCase *tc_neg;
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, test_find_one);
+    tcase_add_test(tc_pos, test_find_several);
+    suite_add_tcase(suite, tc_pos);
+
+    tc_neg = tcase_create("negatives");
+    tcase_add_test(tc_neg, test_find_no);
+    suite_add_tcase(suite, tc_neg);
+
+    return suite;
+}
