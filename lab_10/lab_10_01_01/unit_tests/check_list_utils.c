@@ -239,3 +239,92 @@ Suite *test_find_suite(void)
 
     return suite;
 }
+
+
+START_TEST(test_append_normal)
+{
+    int len = 0;
+
+    FILE* file1 = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file1)
+    {
+        ck_abort_msg("could not open file1");
+    }
+
+    node_t *head1 = NULL;
+    int rc = load_file(file1, &head1);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file1");
+    }
+
+    len += get_len(head1);
+
+    FILE* file2 = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file2)
+    {
+        ck_abort_msg("could not open file2");
+    }
+
+    node_t *head2 = NULL;
+    rc = load_file(file2, &head2);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file2");
+    }
+
+    len += get_len(head2);
+
+    append(&head1, &head2);
+
+    if (len != get_len(head1))
+    {
+        ck_abort_msg("incorrect len of result list");
+    }
+
+    fclose(file1);
+    fclose(file2);
+    free_list(head1);
+}
+END_TEST
+
+START_TEST(test_append_null)
+{
+    FILE* file = fopen("./func_tests/pos_01_in.txt", "r");
+    if (!file)
+    {
+        ck_abort_msg("could not open file");
+    }
+
+    node_t *head1 = NULL;
+    node_t *head2 = NULL;
+    int rc = load_file(file, &head2);
+    if (rc != 0)
+    {
+        ck_abort_msg("could not load data from file");
+    }
+    int len = get_len(head2);
+
+    append(&head1, &head2);
+    if (len != get_len(head1))
+    {
+        ck_abort_msg("incorrect len of result list");
+    }
+
+    fclose(file);
+    free_list(head1);
+}
+END_TEST
+
+Suite *test_append_suite(void)
+{
+    Suite *suite = suite_create("append_suite");
+    TCase *tc_pos;
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, test_append_normal);
+    tcase_add_test(tc_pos, test_append_null);
+    suite_add_tcase(suite, tc_pos);
+
+    return suite;
+}
