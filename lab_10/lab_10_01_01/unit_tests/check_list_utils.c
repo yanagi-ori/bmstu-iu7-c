@@ -38,3 +38,43 @@ Suite *test_create_node_suite(void)
 
     return suite;
 }
+
+
+START_TEST(test_comparator_equal)
+{
+    student_t *student = create_data("surname", "name", "year", "1");
+    int rc = comparator(student, "1");
+    if (rc != 0)
+    {
+        ck_abort();
+    }
+
+    free_data(student);
+}
+END_TEST
+
+START_TEST(test_comparator_not_equal)
+{
+    student_t *student = create_data("surname", "name", "year", "1");
+    int rc = comparator(student, "2");
+    if (rc == 0)
+    {
+        ck_abort();
+    }
+
+    free_data(student);
+}
+END_TEST
+
+Suite *test_comparator_suite(void)
+{
+    Suite *suite = suite_create("comparator_suite");
+    TCase *tc_pos;
+
+    tc_pos = tcase_create("positives");
+    tcase_add_test(tc_pos, test_comparator_equal);
+    tcase_add_test(tc_pos, test_comparator_not_equal);
+    suite_add_tcase(suite, tc_pos);
+
+    return suite;
+}
