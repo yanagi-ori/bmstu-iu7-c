@@ -15,3 +15,6 @@ symcache/
 *.cxxflags
 *.out
 *.zip
+lab_07/lab_07_1/valgrind-out.txt
+lab_07/test/main.c
+lab_08/lab_08_05_01/valgrind-out.txt
